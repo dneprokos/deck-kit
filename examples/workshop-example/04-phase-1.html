@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phase 1 · Pin Current Behaviour</title>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="phase-shared.css">
+</head>
+<body class="phase phase-cyan">
+
+<div class="phase-slide">
+  <header class="phase-header">
+    <div class="phase-num-block">
+      <div class="phase-num">01</div>
+      <div class="phase-of">/ 04</div>
+    </div>
+    <div class="phase-title-block">
+      <div class="phase-eyebrow">🕸️ Phase 1 · Pin</div>
+      <h1 class="phase-title">Pin current behaviour</h1>
+      <div class="phase-tagline">
+        Before you touch a line, capture what the code does today in tests you can trust.
+      </div>
+    </div>
+    <div class="phase-meta-block">
+      <span class="badge badge-cyan">You + AI</span>
+      <span class="time-pill"><strong>20</strong> min</span>
+    </div>
+  </header>
+
+  <div class="phase-body">
+    <div class="goal-card">
+      <div class="goal-label">Goal</div>
+      <div class="goal-text">
+        Wrap the untested module in a <strong>characterization suite</strong> that records its
+        real output — so any later change that moves behaviour turns the bar red.
+      </div>
+    </div>
+
+    <div class="io-flow">
+      <div class="io-card io-input">
+        <div class="io-label">Input</div>
+        <div class="io-icon">🍝</div>
+        <div class="io-title">Legacy module</div>
+        <div class="io-desc">Working code, no tests. Behaviour lives only in the reader's head.</div>
+      </div>
+      <div class="io-arrow">
+        <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+          <line class="flow-arrow" x1="6" y1="20" x2="82" y2="20" stroke="#00e5ff" stroke-width="2"></line>
+          <path d="M78 13 L90 20 L78 27 Z" fill="#00e5ff"></path>
+        </svg>
+      </div>
+      <div class="io-card io-output">
+        <div class="io-label">Output</div>
+        <div class="io-icon">🕸️</div>
+        <div class="io-title">Green characterization suite</div>
+        <div class="io-desc">Every public path pinned to its observed result.</div>
+      </div>
+    </div>
+
+    <div class="bottom-grid">
+      <div class="commands-card">
+        <div class="cmd-label">Commands</div>
+        <div class="cmd">
+          <span class="cmd-prompt">$</span>
+          <span class="cmd-name">npm test -- --watch</span>
+          <div class="cmd-desc">Keep the suite running while you add each pinning test.</div>
+        </div>
+        <div class="cmd">
+          <span class="cmd-prompt">$</span>
+          <span class="cmd-name">git commit -m "pin behaviour"</span>
+          <div class="cmd-desc">Lock in the safety net as its own commit before refactoring.</div>
+        </div>
+      </div>
+      <div class="gate-card">
+        <div class="gate-label">Gate</div>
+        <div class="gate-name">Behaviour pinned</div>
+        <ul class="gate-checklist">
+          <li>Every public path has a test</li>
+          <li>Expected values are recorded, not guessed</li>
+          <li>Suite is green</li>
+          <li>No production code changed yet</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-icon">◆</div>
+      <div class="pattern-body">
+        <div class="pattern-title">Pattern · Pin, don't fix</div>
+        <div class="pattern-text">
+          If the code returns something that looks wrong, <strong>record it anyway</strong>.
+          A characterization test asserts what <em>is</em>; correcting behaviour is a later,
+          separately-tested change.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="shared.js" defer></script>
+</body>
+</html>

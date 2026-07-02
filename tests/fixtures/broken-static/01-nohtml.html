@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Broken static — missing closing html tag</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+<div class="slide">
+  <header class="slide-header">
+    <div class="eyebrow">◆ FIXTURE · BROKEN STATIC</div>
+    <h1 class="gradient-title">This slide never closes its html tag</h1>
+  </header>
+  <p>Gate 1 must fail on this file; Gates 2-4 have nothing to complain about.</p>
+</div>
+<script src="shared.js" defer></script>
+</body>

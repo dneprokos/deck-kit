@@ -1,0 +1,36 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  plugin-validate:
+    name: plugin structure + forbidden tokens
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: validate_plugin.py
+        run: python3 scripts/validate_plugin.py
+
+  gate-selftest:
+    name: gate self-test (${{ matrix.os }})
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: install deps
+        run: npm install
+      - name: install chromium
+        run: npx playwright install --with-deps chromium
+      - name: run gate self-test
+        run: bash tests/run-gate-selftest.sh

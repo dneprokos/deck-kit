@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cover · Why Agentic Programming Changes Everything</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  body.cover {
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Orbit field behind everything */
+  .orbit-field {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid rgba(0, 229, 255, 0.08);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .orbit.a { width: 540px;  height: 540px; }
+  .orbit.b { width: 860px;  height: 860px; border-color: rgba(213, 0, 249, 0.07); }
+
+  .satellite {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    margin-left: -5px;
+    margin-top: -5px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px currentColor;
+  }
+
+  .sat-a { color: var(--accent-cyan);   background: var(--accent-cyan);   animation: orbit-a 22s linear infinite; }
+  .sat-b { color: var(--accent-purple); background: var(--accent-purple); animation: orbit-b 36s linear infinite reverse; }
+
+  @keyframes orbit-a { to { transform: rotate(360deg) translateX(270px) rotate(-360deg); } }
+  @keyframes orbit-b { to { transform: rotate(360deg) translateX(430px) rotate(-360deg); } }
+
+  /* Main card */
+  .cover-card {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 1000px;
+    padding: 60px 40px;
+  }
+
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 18px;
+    background: rgba(13, 20, 36, 0.65);
+    border: 1px solid rgba(0, 229, 255, 0.35);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    color: var(--accent-cyan);
+    text-transform: uppercase;
+    backdrop-filter: blur(6px);
+    margin-bottom: 40px;
+    animation: fade-in-up 0.8s ease both;
+  }
+
+  .kicker .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    box-shadow: 0 0 8px var(--accent-green);
+    animation: breathe 2s ease-in-out infinite;
+  }
+
+  .cover-title {
+    font-size: 6rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    background: linear-gradient(120deg,
+      var(--accent-cyan)   0%,
+      var(--accent-blue)   40%,
+      var(--accent-purple) 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: title-shimmer 6s ease-in-out infinite, fade-in-up 0.9s ease 0.15s both;
+  }
+
+  @keyframes title-shimmer {
+    0%, 100% { background-position:   0% 50%; }
+    50%      { background-position: 100% 50%; }
+  }
+
+  .cover-subtitle {
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-top: 26px;
+    letter-spacing: 0.3px;
+    line-height: 1.55;
+    animation: fade-in-up 0.9s ease 0.3s both;
+  }
+
+  .cover-subtitle strong {
+    color: var(--accent-cyan);
+    font-weight: 600;
+  }
+
+  .pill-row {
+    margin-top: 46px;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    animation: fade-in-up 0.9s ease 0.45s both;
+  }
+
+  .pill {
+    padding: 10px 22px;
+    background: rgba(13, 20, 36, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    backdrop-filter: blur(6px);
+  }
+
+  .pill strong {
+    color: var(--accent-cyan);
+    font-weight: 700;
+    margin-right: 6px;
+  }
+
+  .pill.amber strong { color: var(--accent-amber); }
+
+  /* Meta line */
+  .meta-line {
+    margin-top: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    animation: fade-in 1.2s ease 0.7s both;
+  }
+
+  .meta-line .sep {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .meta-line .speaker {
+    color: var(--text-secondary);
+  }
+
+  /* Presenter mode */
+  body.presenter .cover-title    { font-size: 7.2rem; }
+  body.presenter .cover-subtitle { font-size: 1.6rem; }
+</style>
+</head>
+<body class="cover">
+
+<div class="orbit-field">
+  <div class="orbit a"><div class="satellite sat-a"></div></div>
+  <div class="orbit b"><div class="satellite sat-b"></div></div>
+</div>
+
+<div class="cover-card">
+  <div class="kicker">
+    <span class="dot"></span>
+    Talk · DevConf · ~25 min
+  </div>
+
+  <h1 class="cover-title">Why agentic<br>programming<br>changes everything</h1>
+
+  <p class="cover-subtitle">
+    From <strong>writing code</strong> to <strong>formulating intent</strong> —<br>
+    the engineer's new role in the era of AI agents.
+  </p>
+
+  <div class="pill-row">
+    <div class="pill"><strong>5</strong> key ideas</div>
+    <div class="pill amber"><strong>25</strong> min</div>
+  </div>
+
+  <div class="meta-line">
+    <span class="speaker">Alex Morgan</span>
+    <span class="sep"></span>
+    <span>April 2026</span>
+    <span class="sep"></span>
+    <span>DevConf 2026</span>
+  </div>
+</div>
+
+<script src="shared.js" defer></script>
+</body>
+</html>

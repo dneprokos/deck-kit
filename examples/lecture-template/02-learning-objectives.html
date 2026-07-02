@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Objectives · What You'll Know</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  body.lecture {
+    font-size: calc(var(--base-font) * 1.0);
+  }
+
+  body.presenter.lecture {
+    font-size: calc(var(--base-font) * 1.25);
+  }
+
+  .gradient-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 8px;
+  }
+
+  body.presenter .gradient-title { font-size: 2.8rem; }
+
+  .objectives-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 40px;
+  }
+
+  .objective {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    padding: 16px 20px;
+    border-left: 2px solid var(--accent-cyan);
+    background: rgba(0, 229, 255, 0.04);
+    margin-bottom: 14px;
+    border-radius: var(--radius-sm);
+    opacity: 0;
+    animation: fade-in-up 0.6s ease forwards;
+  }
+
+  .objective:nth-child(1) { animation-delay: 0.1s; }
+  .objective:nth-child(2) { animation-delay: 0.3s; }
+  .objective:nth-child(3) { animation-delay: 0.5s; }
+  .objective:nth-child(4) { animation-delay: 0.7s; }
+  .objective:nth-child(5) { animation-delay: 0.9s; }
+
+  .objective-icon {
+    color: var(--accent-cyan);
+    font-weight: bold;
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+
+  .objective-text {
+    font-size: 1.35rem;
+    line-height: 1.4;
+    color: var(--text-primary);
+  }
+
+  .objective-text strong {
+    color: var(--accent-cyan);
+    font-weight: 700;
+  }
+
+  body.presenter .objective-text { font-size: 1.55rem; }
+</style>
+</head>
+<body class="lecture">
+
+<div class="slide">
+  <header class="slide-header">
+    <div class="eyebrow">◆ LEARNING OBJECTIVES · BY THE END</div>
+  </header>
+  <h1 class="gradient-title">What you'll know after this lecture</h1>
+  <ul class="objectives-list">
+    <li class="objective">
+      <span class="objective-icon">✓</span>
+      <span class="objective-text">
+        <strong>Understand</strong> how the agentic development model works
+      </span>
+    </li>
+    <li class="objective">
+      <span class="objective-icon">✓</span>
+      <span class="objective-text">
+        <strong>Explain</strong> the difference between vibe-coding and an engineering approach
+      </span>
+    </li>
+    <li class="objective">
+      <span class="objective-icon">✓</span>
+      <span class="objective-text">
+        <strong>Apply</strong> the 9-phase SDLC in your own work
+      </span>
+    </li>
+    <li class="objective">
+      <span class="objective-icon">✓</span>
+      <span class="objective-text">
+        <strong>Evaluate</strong> when agentic tools are appropriate
+      </span>
+    </li>
+  </ul>
+</div>
+
+<script src="shared.js" defer></script>
+</body>
+</html>

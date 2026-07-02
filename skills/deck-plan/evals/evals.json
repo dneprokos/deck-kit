@@ -1,0 +1,35 @@
+{
+  "skill_name": "deck-plan",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Plan a workshop deck from the source file sample-workshop-source.md into the output directory ./deck. I am pre-answering the whole scoping dialog so do NOT ask me anything interactively — treat these as my AskUserQuestion answers: Q0 deck type = workshop; Q1 source = sample-workshop-source.md; Q2 identity = title 'Database Migrations Without Downtime', speaker 'Alex Morgan', date '2026', venue 'Hands-on Workshop'; Q3 sections = 3-5 parts; Q4 archetypes = core 7 workshop + diagram/flow + gate-review; Q5 demos = yes, 1-3 demos; Q6 presenter scale = 1.15 (default); Q7 output dir = ./deck; Q8 language = English; marker mapping = the source already uses the standard [SHOW]/[SAY]/[RUN] convention; plan review = approve the first drafted plan as-is.",
+      "expected_output": "A .planning/deck-spec.md written under ./deck with workshop header fields and a slide plan of at least 8 lines in the strict 'NN. archetype · title · message · source' grammar, with archetypes from the catalog and source spans citing real line ranges or markers of the sample source.",
+      "files": ["evals/files/sample-workshop-source.md"],
+      "expectations": [
+        "The file ./deck/.planning/deck-spec.md exists",
+        "The spec header contains 'deck_type: workshop'",
+        "The spec contains at least 8 slide-plan lines matching the regex ^\\d{2}\\. [a-z][a-z0-9-]* · [^·]+ · [^·]+ · [^·]+$",
+        "Every archetype named in the slide-plan lines is one of: cover, quote, comparison, concept, diagram, flow, phase, terminal-demo, table, formula, tabs, sizing-flow, wheel, closing, qa-intro, gate-review, learning-objectives, chapter-break, recap, references-list, hook, thesis, memorable-moment, cta-simple",
+        "At least half of the slide-plan lines cite a source span (source:LX-LY or a marker anchor) rather than free-text, and the cited line numbers fall within the actual line count of sample-workshop-source.md",
+        "The plan includes at least one terminal-demo slide and at least one gate-review slide (the source has [RUN] commands and an explicit human gate)",
+        "No slide content was generated as HTML — the skill stopped at the spec"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Plan a 20-minute conference talk deck from this thesis: 'Code review is a design activity, not a defect hunt.' There is no source file — build the outline with me. I am pre-answering everything so do NOT ask me anything interactively: Q0 = talk; Q1 = nothing yet, and for the co-drafted outline just take these beats in order: (1) opening hook about how most review comments are about naming and style while architecture slips through, (2) the thesis itself, (3) a story about a design flaw that 12 LGTM reviews missed, (4) what to comment on instead: boundaries, contracts, coupling, (5) a comparison of defect-hunt review vs design review, (6) the memorable line 'A review that only finds typos has found nothing', (7) call to action: review the design first, the diff second; Q2 = title 'Review the Design, Not the Diff', speaker 'Alex Morgan', date '2026', venue 'DevConf'; Q3 = 1 part; Q4 = core 5 talk + quote/comparison/concept; Q6 = 1.35 default; Q7 = ./deck; Q8 = English; plan review = approve as-is.",
+      "expected_output": "A .planning/deck-spec.md for a talk with 10-15 slides where hook, thesis, memorable-moment and cta-simple appear in that relative order.",
+      "files": [],
+      "expectations": [
+        "The file ./deck/.planning/deck-spec.md exists",
+        "The spec header contains 'deck_type: talk'",
+        "The slide plan has between 8 and 15 lines matching the strict grammar ^\\d{2}\\. [a-z][a-z0-9-]* · [^·]+ · [^·]+ · [^·]+$",
+        "The plan contains exactly one hook, one thesis, one memorable-moment and one cta-simple slide",
+        "The hook line number is lower than the thesis line number, the thesis lower than the memorable-moment, and the memorable-moment lower than the cta-simple",
+        "The first slide is a cover archetype",
+        "Slide-plan lines cite free-text or the co-drafted outline as source (no fabricated file paths)"
+      ]
+    }
+  ]
+}

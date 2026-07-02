@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>References · Sources</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  body.lecture.references {
+    font-size: calc(var(--base-font) * 1.0);
+  }
+
+  body.presenter.lecture.references {
+    font-size: calc(var(--base-font) * 1.25);
+  }
+
+  .gradient-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 8px;
+  }
+
+  body.presenter .gradient-title { font-size: 2.8rem; }
+
+  .references-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+    margin-top: 32px;
+  }
+
+  .references-table th {
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    padding: 8px 16px;
+    text-transform: uppercase;
+  }
+
+  .references-table td {
+    padding: 14px 16px;
+    background: rgba(13, 20, 36, 0.5);
+    border-top: 1px solid rgba(0, 229, 255, 0.1);
+    border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+    vertical-align: middle;
+  }
+
+  .references-table td:first-child {
+    border-left: 2px solid var(--accent-cyan);
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    width: 60px;
+  }
+
+  .references-table td:last-child {
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+
+  .references-table tbody tr {
+    animation: fade-in-up 0.5s ease both;
+  }
+
+  .references-table tbody tr:nth-child(1) { animation-delay: 0.05s; }
+  .references-table tbody tr:nth-child(2) { animation-delay: 0.12s; }
+  .references-table tbody tr:nth-child(3) { animation-delay: 0.19s; }
+  .references-table tbody tr:nth-child(4) { animation-delay: 0.26s; }
+  .references-table tbody tr:nth-child(5) { animation-delay: 0.33s; }
+  .references-table tbody tr:nth-child(6) { animation-delay: 0.40s; }
+
+  .references-table tbody tr:hover td {
+    background: rgba(0, 229, 255, 0.04);
+  }
+
+  .ref-num {
+    font-family: var(--font-mono);
+    color: var(--accent-cyan);
+    font-size: 1rem;
+  }
+
+  .references-table a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+  }
+
+  .references-table a:hover {
+    color: var(--accent-cyan);
+    text-decoration: underline;
+  }
+
+  .ref-meta {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .ref-meta strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .ref-meta em {
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+</style>
+</head>
+<body class="lecture references">
+
+<div class="slide">
+  <header class="slide-header">
+    <div class="eyebrow">◆ REFERENCES · FURTHER READING</div>
+  </header>
+  <h1 class="gradient-title">Sources</h1>
+
+  <table class="data-table references-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Reference</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="ref-num">01</span></td>
+        <td class="ref-meta">
+          <strong>Anthropic · 2025</strong>
+          · <em>Claude Agent SDK</em>
+          · <a href="https://docs.anthropic.com/agents">docs.anthropic.com/agents</a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="ref-num">02</span></td>
+        <td class="ref-meta">
+          <strong>Karpathy · 2024</strong>
+          · <em>Software 2.0</em>
+          · <a href="https://karpathy.medium.com">karpathy.medium.com</a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="ref-num">03</span></td>
+        <td class="ref-meta">
+          <strong>GitHub · 2025</strong>
+          · <em>Copilot Workspace</em>
+          · <a href="https://github.blog">github.blog</a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="ref-num">04</span></td>
+        <td class="ref-meta">
+          <strong>Cursor · 2024</strong>
+          · <em>AI-first IDE</em>
+          · <a href="https://cursor.sh/features">cursor.sh/features</a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="ref-num">05</span></td>
+        <td class="ref-meta">
+          <strong>OpenAI · 2025</strong>
+          · <em>Deep research patterns</em>
+          · <a href="https://platform.openai.com">platform.openai.com</a>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="ref-num">06</span></td>
+        <td class="ref-meta">
+          <strong>Morgan · 2026</strong>
+          · <em>Agentic Engineering Workshop</em>
+          · <a href="https://example.com/deck-kit">example.com/deck-kit</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script src="shared.js" defer></script>
+</body>
+</html>

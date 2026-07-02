@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo · Pinning Behaviour, Red to Green</title>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="demo-shared.css">
+</head>
+<body>
+
+<div class="demo-slide">
+  <header class="demo-header">
+    <div class="demo-num-block">
+      <div class="demo-num">05</div>
+      <div class="demo-of">/ 08 DEMO</div>
+    </div>
+    <div class="demo-title-block">
+      <div class="eyebrow">▶ Live demo · Phase 1</div>
+      <h1>Pinning behaviour, red to green</h1>
+      <div class="tagline">Write a test that fails on a guess, then pin the code's real output.</div>
+    </div>
+    <div class="demo-meta-block">
+      <span class="badge badge-green">~6 min</span>
+    </div>
+  </header>
+
+  <div class="demo-main">
+    <aside class="demo-context">
+      <div class="ctx-card accent">
+        <div class="label">Command</div>
+        <h3><code>npm test</code></h3>
+        <p>Run the characterization suite for the <code>cart</code> module.</p>
+      </div>
+      <div class="ctx-card">
+        <div class="label">What you see</div>
+        <ul>
+          <li>First run fails — we guessed <code>4200</code></li>
+          <li>The code actually returns <code>4620</code></li>
+          <li>Pin the real value; re-run goes green</li>
+        </ul>
+      </div>
+      <div class="ctx-card">
+        <div class="label">Key point</div>
+        <div class="key-quote">
+          A failing characterization test isn't a bug — it's the code telling you
+          its real output.
+        </div>
+      </div>
+      <div class="ctx-card">
+        <div class="label">Gate</div>
+        <span class="phase-chip">◆ Behaviour pinned</span>
+        <p>The suite must be green before any refactoring step begins.</p>
+      </div>
+    </aside>
+
+    <section class="demo-terminal-wrap">
+      <div class="terminal">
+        <div class="terminal-titlebar">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="title">user@deck — cart/</span>
+        </div>
+        <div class="terminal-body" id="body"></div>
+        <div class="run-overlay" id="overlay">
+          <button class="run-btn" id="run">▶ RUN DEMO</button>
+          <div class="run-hint">npm test</div>
+        </div>
+        <button class="reset-btn" id="reset">↻ RESET</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script src="shared.js" defer></script>
+<script src="demo-runner.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  DemoRunner.init({
+    prompt: "user@deck",
+    command: "npm test",
+    commandSpeed: 45,
+    steps: [
+      { type: "line", class: "terminal-muted", text: "› characterization suite  ·  pins existing behaviour" },
+      { type: "pause", duration: 300 },
+      { type: "progress", label: "RUNS  cart.characterization", pct: 100, duration: 1100 },
+      { type: "blank" },
+      { type: "multi", gap: 80, lines: [
+        { class: "terminal-err",   text: "✕ cart › total matches recorded output (14 ms)" },
+        { class: "terminal-muted", text: "&nbsp;&nbsp;expect(received).toBe(expected)" },
+        { class: "",               text: "&nbsp;&nbsp;Expected: <span class='terminal-warn'>4200</span>  <span class='terminal-muted'>(our guess)</span>" },
+        { class: "",               text: "&nbsp;&nbsp;Received: <span class='terminal-ok'>4620</span>  <span class='terminal-muted'>(real behaviour)</span>" }
+      ]},
+      { type: "blank" },
+      { type: "line", class: "terminal-warn", text: "→ The code already charges 4620. Don't fix it — pin it." },
+      { type: "pause", duration: 400 },
+      { type: "line", class: "terminal-muted", text: "› expected 4200 → 4620   (behaviour recorded, not changed)" },
+      { type: "blank" },
+      { type: "multi", lines: [
+        { class: "", text: "<span class='terminal-prompt'>user@deck</span> <span class='terminal-command'>npm test</span>" }
+      ]},
+      { type: "pause", duration: 300 },
+      { type: "progress", label: "RUNS  cart.characterization", pct: 100, duration: 1000, doneLabel: "PASS" },
+      { type: "blank" },
+      { type: "multi", gap: 70, lines: [
+        { class: "terminal-ok", text: "✓ cart › total matches recorded output (9 ms)" },
+        { class: "terminal-ok", text: "✓ cart › applies member discount (7 ms)" },
+        { class: "terminal-ok", text: "✓ cart › caps free-shipping threshold (6 ms)" }
+      ]},
+      { type: "blank" },
+      { type: "line", class: "terminal-ok", text: "Test Suites: 1 passed, 1 total" },
+      { type: "line", class: "terminal-ok", text: "Tests:       3 passed, 3 total" },
+      { type: "blank" },
+      { type: "line", class: "terminal-warn", text: "◆ Green safety net in place — refactoring can begin." }
+    ]
+  });
+});
+</script>
+</body>
+</html>

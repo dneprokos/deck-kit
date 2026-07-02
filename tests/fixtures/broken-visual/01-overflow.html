@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Broken visual — horizontal overflow</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .too-wide { width: 2500px; height: 12px; background: var(--bg-panel); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <header class="slide-header">
+    <div class="eyebrow">◆ FIXTURE · BROKEN VISUAL</div>
+    <h1 class="gradient-title">This slide overflows 1920px horizontally</h1>
+  </header>
+  <div class="too-wide"></div>
+  <p>Gates 1-3 pass (structure, tokens, reachability); Gate 4 must fail on scrollWidth.</p>
+</div>
+<script src="shared.js" defer></script>
+</body>
+</html>

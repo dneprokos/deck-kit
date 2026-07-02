@@ -1,0 +1,14 @@
+{
+  "name": "deck-kit",
+  "version": "0.1.0",
+  "description": "Claude Code plugin: plan and build presenter-grade HTML slide decks (workshop / lecture / talk) with a Socratic per-slide dialog and a 4-gate validation pipeline.",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "validate": "python3 scripts/validate_plugin.py",
+    "selftest": "bash tests/run-gate-selftest.sh"
+  },
+  "devDependencies": {
+    "playwright": "1.59.1"
+  }
+}

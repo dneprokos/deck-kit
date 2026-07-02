@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow · The Refactor Loop</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .flow-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 32px 56px;
+  }
+
+  .flow-wrap > header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .flow-wrap > header .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .flow-wrap > header h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .flow-wrap > header .sub {
+    margin-top: 10px;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+  }
+
+  .flow-chain {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .flow-node {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 20px;
+    align-items: center;
+    background: var(--bg-panel);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-left: 4px solid var(--node-accent);
+    border-radius: var(--radius-lg);
+    padding: 18px 26px;
+    animation: fade-in-up 0.5s ease both;
+  }
+
+  .flow-node.node-red   { --node-accent: var(--accent-red); }
+  .flow-node.node-cyan  { --node-accent: var(--accent-cyan); }
+  .flow-node.node-blue  { --node-accent: var(--accent-blue); }
+  .flow-node.node-amber { --node-accent: var(--accent-amber); box-shadow: var(--glow-amber); border-color: rgba(255, 171, 64, 0.4); }
+  .flow-node.node-green { --node-accent: var(--accent-green); box-shadow: var(--glow-green); border-color: rgba(0, 230, 118, 0.4); }
+
+  .node-icon {
+    font-size: 2rem;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .flow-node.node-amber .node-icon {
+    color: var(--accent-amber);
+    font-family: Georgia, serif;
+    animation: breathe 2.6s ease-in-out infinite;
+  }
+
+  .node-step {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .node-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--node-accent);
+    margin: 2px 0 4px;
+  }
+
+  .node-desc {
+    font-size: 0.98rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+  }
+
+  .flow-conn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 8px 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .flow-conn .arrow {
+    font-size: 1.2rem;
+    color: var(--accent-cyan);
+    line-height: 1;
+  }
+
+  .flow-loop {
+    max-width: 720px;
+    margin: 24px auto 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .loop-card {
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    background: rgba(13, 20, 36, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--text-secondary);
+  }
+
+  .loop-card .k {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .loop-card.ok    { border-color: rgba(0, 230, 118, 0.3); }
+  .loop-card.ok .k    { color: var(--accent-green); }
+  .loop-card.back  { border-color: rgba(255, 82, 82, 0.3); }
+  .loop-card.back .k  { color: var(--accent-red); }
+
+  .loop-card strong { color: var(--text-primary); font-weight: 600; }
+
+  body.presenter .node-title { font-size: 1.5rem; }
+  body.presenter .node-desc  { font-size: 1.08rem; }
+</style>
+</head>
+<body>
+
+<div class="flow-wrap">
+  <header>
+    <div class="eyebrow">◆ Flow · The Inner Loop</div>
+    <h1>One small refactor, start to finish</h1>
+    <p class="sub">Repeat this loop once per smell. Never skip a step, never batch two.</p>
+  </header>
+
+  <div class="flow-chain">
+
+    <div class="flow-node node-red stagger-item">
+      <div class="node-icon">👃</div>
+      <div class="node-body">
+        <div class="node-step">Step 1</div>
+        <div class="node-title">Smell</div>
+        <div class="node-desc">Name one concrete problem — a long method, a duplicated block, a misleading name.</div>
+      </div>
+    </div>
+
+    <div class="flow-conn"><span class="arrow">↓</span> pick the smallest safe move</div>
+
+    <div class="flow-node node-cyan stagger-item">
+      <div class="node-icon">🕸️</div>
+      <div class="node-body">
+        <div class="node-step">Step 2</div>
+        <div class="node-title">Pin</div>
+        <div class="node-desc">Confirm the affected path already has a characterization test. If not, add one first.</div>
+      </div>
+    </div>
+
+    <div class="flow-conn"><span class="arrow">↓</span> tests still green</div>
+
+    <div class="flow-node node-blue stagger-item">
+      <div class="node-icon">✂️</div>
+      <div class="node-body">
+        <div class="node-step">Step 3</div>
+        <div class="node-title">Extract</div>
+        <div class="node-desc">Make exactly one structural move — extract, rename, or inline. Nothing else.</div>
+      </div>
+    </div>
+
+    <div class="flow-conn"><span class="arrow">↓</span> run the suite</div>
+
+    <div class="flow-node node-amber stagger-item">
+      <div class="node-icon">◆</div>
+      <div class="node-body">
+        <div class="node-step">Step 4 · Gate</div>
+        <div class="node-title">Verify</div>
+        <div class="node-desc">The whole suite runs. Green means behaviour held. This is the decision point.</div>
+      </div>
+    </div>
+
+    <div class="flow-conn"><span class="arrow">↓</span> green only</div>
+
+    <div class="flow-node node-green stagger-item">
+      <div class="node-icon">💾</div>
+      <div class="node-body">
+        <div class="node-step">Step 5</div>
+        <div class="node-title">Commit</div>
+        <div class="node-desc">A tiny, green, behaviour-preserving commit. A safe point to return to.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="flow-loop">
+    <div class="loop-card ok">
+      <span class="k">✓ Green at the gate</span>
+      Commit and loop back to <strong>Step 1</strong> for the next smell.
+    </div>
+    <div class="loop-card back">
+      <span class="k">✕ Red at the gate</span>
+      Revert the <strong>last single move</strong> — never debug forward — and retry smaller.
+    </div>
+  </div>
+</div>
+
+<script src="shared.js" defer></script>
+</body>
+</html>

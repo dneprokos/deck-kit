@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gate · Ready to Ship?</title>
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="phase-shared.css">
+<style>
+  body.gate-review .slide {
+    justify-content: center;
+  }
+
+  .gate-review .slide-header {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: none;
+  }
+
+  .gate-review .slide-header .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent-amber);
+  }
+
+  .gradient-title {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    background: linear-gradient(90deg, var(--accent-amber), var(--accent-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  body.presenter .gradient-title { font-size: 3.4rem; }
+
+  .gate-review-card {
+    max-width: 940px;
+    margin: 36px auto 0;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 32px;
+    align-items: center;
+    padding: 40px 44px;
+    border-color: rgba(255, 171, 64, 0.45);
+    box-shadow: var(--glow-amber);
+  }
+
+  .gate-diamond {
+    font-family: Georgia, serif;
+    font-size: 9rem;
+    line-height: 1;
+    text-align: center;
+    color: var(--accent-amber);
+    text-shadow: 0 0 40px rgba(255, 171, 64, 0.4);
+    animation: breathe 2.8s ease-in-out infinite;
+  }
+
+  .gate-content .gate-label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-amber);
+    margin-bottom: 14px;
+  }
+
+  .gate-content .gate-checklist li {
+    font-size: 1.08rem;
+    padding: 8px 0 8px 30px;
+  }
+
+  body.gate-review .gate-checklist li::before {
+    content: "✓";
+    color: var(--accent-green);
+    font-size: 1.05rem;
+    top: 8px;
+  }
+
+  .gate-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 12px 22px;
+    border: 1px solid rgba(255, 171, 64, 0.5);
+    border-radius: 100px;
+    background: rgba(255, 171, 64, 0.06);
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-amber);
+  }
+
+  .status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent-amber);
+    box-shadow: 0 0 12px var(--accent-amber);
+    animation: breathe 1.4s ease-in-out infinite;
+  }
+
+  .gate-foot {
+    max-width: 940px;
+    margin: 22px auto 0;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .gate-foot strong { color: var(--accent-amber); font-weight: 600; }
+</style>
+</head>
+<body class="gate-review">
+
+<div class="slide">
+  <header class="slide-header">
+    <div class="eyebrow">◆ Gate · Awaiting approval</div>
+    <h1 class="gradient-title">Ready to ship?</h1>
+  </header>
+
+  <div class="gate-card gate-review-card">
+    <div class="gate-diamond">◆</div>
+    <div class="gate-content">
+      <div class="gate-label">Approval checklist</div>
+      <ul class="gate-checklist">
+        <li>The full test suite is green</li>
+        <li>No behaviour changed — characterization tests untouched</li>
+        <li>The diff is reviewed and reads as pure restructuring</li>
+        <li>Each commit is small and independently green</li>
+      </ul>
+      <div class="gate-status">
+        <span class="status-dot"></span>
+        Awaiting human confirmation
+      </div>
+    </div>
+  </div>
+
+  <p class="gate-foot">
+    A refactor is <strong>done</strong> only when a human agrees the behaviour is
+    identical and the shape is better. The gate does not open on its own.
+  </p>
+</div>
+
+<script src="shared.js" defer></script>
+</body>
+</html>

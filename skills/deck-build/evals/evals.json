@@ -1,0 +1,44 @@
+{
+  "skill_name": "deck-build",
+  "evals": [
+    {
+      "id": 3,
+      "prompt": "Build the deck from the existing spec. The deck directory is ./fixture-spec — it already contains .planning/deck-spec.md (5 planned slides, talk, English) and .planning/source.md. I am pre-answering the whole per-slide dialog so do NOT ask me anything interactively: for every slide accept the archetype, title and source span exactly as written in the spec (PS1-PS3 = 'from plan'); PS4 hero visual = the archetype's default; PS5 drill-downs = defaults (no custom colours, no custom labels); I explicitly opt into fast mode from slide 1; every validation gate prompt = 'yes, next gate'. Scaffold with the plugin's new-skeleton.sh, generate all 5 slides from the source spans, keep SLIDES in sync, run all 4 gates, and write the deck manifest.",
+      "expected_output": "A complete 5-slide HTML talk deck in ./fixture-spec that passes all 4 validation gates, with index.html placeholders replaced and .planning/deck-manifest.md recording the result.",
+      "files": [
+        "evals/files/fixture-spec/.planning/deck-spec.md",
+        "evals/files/fixture-spec/.planning/source.md"
+      ],
+      "expectations": [
+        "Exactly 5 files matching NN-*.html exist in ./fixture-spec, numbered 01 through 05",
+        "index.html, shared.css and shared.js exist in ./fixture-spec",
+        "The SLIDES array in shared.js has exactly 5 entries and every referenced filename exists on disk",
+        "index.html contains no unreplaced {{placeholder}} tokens",
+        "All 4 gates were run and reported PASS (static, tokens, http, visual) — the transcript shows each gate's output",
+        "The file ./fixture-spec/.planning/deck-manifest.md exists and lists the slide order and the gate results",
+        "Slide 04 (memorable-moment) contains the quote 'A big PR is not a unit of work' traced from the source file",
+        "No hardcoded hex colours outside the documented allow-list appear in the generated slides"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Audit this existing deck: ./audit-deck — just validate it, do not change anything. Run the validation gates against it and report what is wrong. I am pre-answering any gate prompts: 'show details of the failing check' and then stop — do not fix anything, I only want the report.",
+      "expected_output": "An audit report that identifies Gate 2 (tokens) as the failing gate and names the offending hex value #ff0000 in 01-badhex.html, with zero files modified.",
+      "files": [
+        "evals/files/audit-deck/index.html",
+        "evals/files/audit-deck/shared.css",
+        "evals/files/audit-deck/shared.js",
+        "evals/files/audit-deck/01-badhex.html",
+        "evals/files/audit-deck/.planning/deck-spec.md"
+      ],
+      "expectations": [
+        "The skill entered audit mode (gates only) — it did not run a scoping dialog and did not generate any new slides",
+        "The report states Gate 1 (static) passed",
+        "The report states Gate 2 (tokens) failed",
+        "The report names the specific offending value #ff0000 and the file 01-badhex.html",
+        "No file in ./audit-deck was created, modified or deleted by the audit (aside from an optional .audit/ screenshots directory)",
+        "The report does not claim the deck is done or shippable"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concept · The Refactoring Safety Net</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .slide-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 44px 32px 48px;
+  }
+
+  .slide-wrap > header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .slide-wrap > header .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .slide-wrap > header h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .slide-wrap > header .sub {
+    margin-top: 12px;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Concept card grid — 3 columns */
+  .grid-concept {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 8px;
+  }
+
+  .concept-card {
+    position: relative;
+    background: var(--bg-panel);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: var(--radius-lg);
+    padding: 30px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow: hidden;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .concept-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 229, 255, 0.3);
+  }
+
+  /* Top accent stripe */
+  .concept-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--card-from), var(--card-to));
+  }
+
+  .concept-card.card-1 { --card-from: var(--accent-cyan);  --card-to: var(--accent-blue);  border-color: rgba(0, 229, 255, 0.35); box-shadow: var(--glow-cyan); }
+  .concept-card.card-2 { --card-from: var(--accent-blue);  --card-to: var(--accent-purple); }
+  .concept-card.card-3 { --card-from: var(--accent-green); --card-to: var(--accent-cyan); }
+
+  .card-icon {
+    font-size: 2.4rem;
+    line-height: 1;
+  }
+
+  .card-num {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .card-name {
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--text-primary);
+  }
+
+  .concept-card.card-1 .card-name { color: var(--accent-cyan); }
+
+  .card-desc {
+    font-size: 1.02rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    flex: 1;
+  }
+
+  .card-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-top: 12px;
+  }
+
+  body.presenter .card-desc { font-size: 1.15rem; }
+</style>
+</head>
+<body>
+
+<div class="slide-wrap">
+  <header>
+    <div class="eyebrow">◆ Concept · The Big Idea</div>
+    <h1>The Refactoring Safety Net</h1>
+    <p class="sub">
+      Refactoring is safe only when three things hold at once. Drop any one
+      and you are just editing code and hoping.
+    </p>
+  </header>
+
+  <div class="grid-concept">
+
+    <div class="concept-card card-1 stagger-item">
+      <div class="card-icon">🕸️</div>
+      <div class="card-num">Net · 01</div>
+      <div class="card-name">Characterization tests</div>
+      <div class="card-desc">
+        Tests that pin what the code <em>actually</em> does today — bugs and all —
+        before you touch it. They describe behaviour, not intent.
+      </div>
+      <div class="card-tag">Catches: silent behaviour drift</div>
+    </div>
+
+    <div class="concept-card card-2 stagger-item">
+      <div class="card-icon">👣</div>
+      <div class="card-num">Net · 02</div>
+      <div class="card-name">Small steps</div>
+      <div class="card-desc">
+        One structural move at a time — rename, extract, inline — each small
+        enough that if it breaks, you know exactly which step did it.
+      </div>
+      <div class="card-tag">Catches: hard-to-locate regressions</div>
+    </div>
+
+    <div class="concept-card card-3 stagger-item">
+      <div class="card-icon">✅</div>
+      <div class="card-num">Net · 03</div>
+      <div class="card-name">Continuous green</div>
+      <div class="card-desc">
+        Run the suite after every step. The bar never leaves green for more
+        than a moment, so you always have a safe point to return to.
+      </div>
+      <div class="card-tag">Catches: a broken commit reaching main</div>
+    </div>
+
+  </div>
+</div>
+
+<script src="shared.js" defer></script>
+</body>
+</html>

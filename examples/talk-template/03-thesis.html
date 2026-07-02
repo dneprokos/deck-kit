@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thesis · Agentic Engineering = Goal + Context + Tools</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* [THESIS] — central thesis statement */
+
+  body.talk.thesis {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .thesis-hero {
+    max-width: 1200px;
+    margin: 60px auto 0;
+    text-align: center;
+    padding: 0 var(--slide-padding);
+    animation: fade-in-up 0.9s ease both;
+  }
+
+  .thesis-eyebrow {
+    font-family: var(--font-mono);
+    color: var(--accent-cyan);
+    font-size: 0.85rem;
+    letter-spacing: 4px;
+    margin-bottom: 28px;
+    text-transform: uppercase;
+  }
+
+  .thesis-line {
+    font-family: var(--font-mono);
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1.3;
+    padding: 40px 60px;
+    border: 1px solid var(--accent-cyan);
+    border-radius: var(--radius-lg);
+    background: rgba(0, 229, 255, 0.04);
+    box-shadow: var(--glow-cyan);
+    color: var(--text-primary);
+    animation: fade-in-up 0.9s ease 0.2s both;
+  }
+
+  .thesis-why {
+    margin-top: 48px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fade-in-up 0.9s ease 0.4s both;
+  }
+
+  .thesis-why-label {
+    font-family: var(--font-mono);
+    color: var(--accent-amber);
+    font-size: 0.78rem;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .thesis-why-text {
+    font-size: 1.25rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+  }
+
+  /* Presenter mode */
+  body.presenter .thesis-line    { font-size: 2.8rem; padding: 44px 64px; }
+  body.presenter .thesis-why-text { font-size: 1.45rem; }
+</style>
+</head>
+<body class="talk thesis">
+
+<div class="slide">
+  <div class="thesis-hero">
+    <div class="thesis-eyebrow">◆ THE THESIS</div>
+    <div class="thesis-line">Agentic Engineering = Goal + Context + Tools</div>
+    <div class="thesis-why">
+      <div class="thesis-why-label">WHY IT MATTERS</div>
+      <p class="thesis-why-text">
+        When AI receives a goal, context, and tools, it plans and executes the steps on its own.
+        The human stays in control through checkpoints, not through micromanagement.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="shared.js" defer></script>
+</body>
+</html>

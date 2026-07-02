@@ -1,0 +1,23 @@
+{
+  "name": "deck-kit",
+  "version": "0.1.0",
+  "description": "Plan and build presenter-grade HTML slide decks (workshop / lecture / talk) in two skills: deck-plan turns any source — thesis, outline, article, script — into a reviewed slide plan (.planning/deck-spec.md with one archetype·title·message·source line per slide), and deck-build generates the deck slide-by-slide through a Socratic dialog (never batch), from 24 slide archetypes (cover, quote, phase, terminal-demo, wheel, hook, thesis, learning-objectives, recap, …) on a frozen cyberpunk design-token system. Every deck must pass 4 independent validation gates before it ships: static structure, design-token integrity, HTTP smoke, and Playwright visual rendering at 1920×1080 with per-slide screenshots. Decks are plain HTML files — python3 -m http.server and present with keyboard nav and presenter mode.",
+  "author": {
+    "name": "Kyrylo Genkov",
+    "email": "genkovi4@gmail.com",
+    "url": "https://github.com/genkovich"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/genkovich/deck-kit",
+  "repository": "https://github.com/genkovich/deck-kit.git",
+  "keywords": [
+    "slides",
+    "presentation",
+    "deck",
+    "workshop",
+    "lecture",
+    "conference-talk",
+    "claude-code",
+    "playwright"
+  ]
+}

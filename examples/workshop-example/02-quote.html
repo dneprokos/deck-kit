@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quote · Code for Humans</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  body.quote {
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Ambient glow behind the quote */
+  body.quote::after {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 760px;
+    height: 420px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(0, 229, 255, 0.07) 0%,
+      rgba(41, 121, 255, 0.05) 50%,
+      transparent 75%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .quote-slide {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 1180px;
+    padding: 40px;
+  }
+
+  .quote-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 18px;
+    background: rgba(0, 229, 255, 0.06);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    color: var(--accent-cyan);
+    text-transform: uppercase;
+    margin-bottom: 34px;
+    animation: fade-in-up 0.8s ease both;
+  }
+
+  .quote-mark {
+    font-family: Georgia, serif;
+    font-size: 6rem;
+    line-height: 0.4;
+    color: rgba(0, 229, 255, 0.35);
+    height: 3rem;
+    animation: fade-in 1s ease both;
+  }
+
+  blockquote {
+    margin: 0;
+    animation: fade-in-up 0.9s ease 0.2s both;
+  }
+
+  blockquote .line {
+    display: block;
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.28;
+    color: var(--text-primary);
+  }
+
+  blockquote .line.dim {
+    color: var(--text-secondary);
+    font-weight: 400;
+    font-size: 2.4rem;
+  }
+
+  .hit {
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 229, 255, 0.4);
+    border-radius: var(--radius-sm);
+    padding: 0 10px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .attr {
+    margin-top: 40px;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    animation: fade-in 1.2s ease 0.6s both;
+  }
+
+  .attr strong {
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+
+  .bottom-hook {
+    margin-top: 44px;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fade-in-up 1s ease 0.8s both;
+  }
+
+  .bottom-hook strong { color: var(--accent-green); font-weight: 600; }
+
+  /* Presenter mode */
+  body.presenter blockquote .line      { font-size: 3.2rem; }
+  body.presenter blockquote .line.dim  { font-size: 2.6rem; }
+</style>
+</head>
+<body class="quote">
+
+<div class="quote-slide">
+  <div class="quote-eyebrow">◆ Guiding principle</div>
+
+  <div class="quote-mark">&ldquo;</div>
+
+  <blockquote>
+    <span class="line dim">Any fool can write code that a computer can understand.</span>
+    <span class="line">Good programmers write code that <span class="hit">humans can understand</span>.</span>
+  </blockquote>
+
+  <div class="attr">&mdash; <strong>Martin Fowler</strong>, Refactoring (1999)</div>
+
+  <p class="bottom-hook">
+    Refactoring is how we get there safely: reshape the code for the next reader
+    while the <strong>tests prove the behaviour never moved</strong>.
+  </p>
+</div>
+
+<script src="shared.js" defer></script>
+</body>
+</html>

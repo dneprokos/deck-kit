@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Closing · Refactor with a Net</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  body.closing {
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  body.closing::after {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 820px;
+    height: 460px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(0, 230, 118, 0.06) 0%,
+      rgba(0, 229, 255, 0.05) 50%,
+      transparent 76%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .closing-wrap {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 1200px;
+    padding: 40px;
+  }
+
+  .closing-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    animation: fade-in-up 0.8s ease both;
+  }
+
+  .closing-title {
+    font-size: 3.6rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    background: linear-gradient(120deg, var(--accent-cyan), var(--accent-green), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fade-in-up 0.9s ease 0.1s both;
+  }
+
+  .takeaways {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    text-align: left;
+  }
+
+  .takeaway {
+    background: var(--bg-panel);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-top: 3px solid var(--t-accent);
+    border-radius: var(--radius-lg);
+    padding: 24px 22px;
+    animation: fade-in-up 0.6s ease both;
+  }
+
+  .takeaway.t1 { --t-accent: var(--accent-cyan); }
+  .takeaway.t2 { --t-accent: var(--accent-blue); }
+  .takeaway.t3 { --t-accent: var(--accent-amber); }
+
+  .takeaway:nth-child(1) { animation-delay: 0.2s; }
+  .takeaway:nth-child(2) { animation-delay: 0.35s; }
+  .takeaway:nth-child(3) { animation-delay: 0.5s; }
+
+  .takeaway .t-num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--t-accent);
+    margin-bottom: 10px;
+  }
+
+  .takeaway .t-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .takeaway .t-body {
+    font-size: 0.96rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .cta-block {
+    margin-top: 40px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 26px 44px;
+    border: 1px solid var(--accent-green);
+    border-radius: var(--radius-lg);
+    background: rgba(0, 230, 118, 0.05);
+    box-shadow: var(--glow-green);
+    animation: fade-in-up 0.8s ease 0.65s both;
+  }
+
+  .cta-label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-green);
+  }
+
+  .cta-verb {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+  }
+
+  .cta-sub {
+    font-size: 0.98rem;
+    color: var(--text-secondary);
+  }
+
+  .contact-line {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    animation: fade-in 1.2s ease 0.85s both;
+  }
+
+  .contact-line .sep {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .contact-line .name { color: var(--text-secondary); }
+
+  body.presenter .closing-title { font-size: 4.2rem; }
+  body.presenter .cta-verb      { font-size: 2.3rem; }
+</style>
+</head>
+<body class="closing">
+
+<div class="closing-wrap">
+  <div class="closing-eyebrow">◆ Wrap-up · Three things to keep</div>
+  <h1 class="closing-title">Refactor with a net</h1>
+
+  <div class="takeaways">
+    <div class="takeaway t1">
+      <div class="t-num">Takeaway 01</div>
+      <div class="t-title">Pin before you touch</div>
+      <div class="t-body">Characterization tests record what the code really does — that green baseline is your net.</div>
+    </div>
+    <div class="takeaway t2">
+      <div class="t-num">Takeaway 02</div>
+      <div class="t-title">Small green steps</div>
+      <div class="t-body">One structural move, verify, commit. If the bar goes red, revert the last step — never debug forward.</div>
+    </div>
+    <div class="takeaway t3">
+      <div class="t-num">Takeaway 03</div>
+      <div class="t-title">The gate is human</div>
+      <div class="t-body">Nothing ships until a person confirms the behaviour is identical and the shape is genuinely better.</div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <div class="cta-label">◆ One action</div>
+    <div class="cta-verb">Refactor one module this week</div>
+    <div class="cta-sub">Pick your gnarliest file, pin its behaviour, take a single small green step.</div>
+  </div>
+
+  <div class="contact-line">
+    <span class="name">Alex Morgan</span>
+    <span class="sep"></span>
+    <span>workshop.example.com</span>
+    <span class="sep"></span>
+    <span>Thank you</span>
+  </div>
+</div>
+
+<script src="shared.js" defer></script>
+</body>
+</html>

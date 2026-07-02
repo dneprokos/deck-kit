@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hook · What If AI Writes 80% of Your Code Tomorrow?</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  /* [HOOK] — opening attention-grab */
+
+  body.talk.hook {
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Ambient glow radiate behind text */
+  body.talk.hook::after {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 400px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(0, 229, 255, 0.07) 0%,
+      rgba(213, 0, 249, 0.05) 50%,
+      transparent 75%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hook-slide {
+    text-align: center;
+    max-width: 1400px;
+    padding: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hook-text {
+    font-size: 4.5rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    background: linear-gradient(120deg,
+      var(--accent-cyan) 0%, var(--accent-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fade-in-up 1s ease both;
+  }
+
+  .hook-sub {
+    margin-top: 40px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    letter-spacing: 4px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    animation: fade-in-up 1s ease 0.4s both;
+  }
+
+  /* Presenter mode */
+  body.presenter .hook-text { font-size: 5.4rem; }
+</style>
+</head>
+<body class="talk hook">
+
+<div class="hook-slide">
+  <div class="hook-text">What if AI writes 80%<br>of your code tomorrow?</div>
+  <div class="hook-sub">THE OPENING QUESTION</div>
+</div>
+
+<script src="shared.js" defer></script>
+</body>
+</html>
