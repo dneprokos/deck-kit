@@ -1,5 +1,5 @@
 /* ========================================================================
-   Presentation Slides — Shared behaviour
+   deck-kit — Shared behaviour
    - Detect ?presenter → enable presenter mode + progress bar
    - Keyboard nav: ArrowRight/Space = next, ArrowLeft = prev, Esc = index
    - Inject prev/next/index buttons (unless disabled)
@@ -11,7 +11,7 @@
          execute first (defer would reorder it after).
 
    The SLIDES array below is populated incrementally by the
-   presentation-slides skill as each slide is generated. Keep in sync with
+   deck-build skill as each slide is generated. Keep in sync with
    actual filenames in the output directory; mismatch breaks navigation.
    ======================================================================== */
 
