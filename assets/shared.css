@@ -198,12 +198,14 @@ body::before {
   text-transform: uppercase;
 }
 
-.badge-cyan   { background: color-mix(in srgb, var(--accent-primary) 12%, transparent); color: var(--accent-primary); border: 1px solid color-mix(in srgb, var(--accent-primary) 40%, transparent); }
-.badge-green  { background: color-mix(in srgb, var(--accent-success) 12%, transparent); color: var(--accent-success); border: 1px solid color-mix(in srgb, var(--accent-success) 40%, transparent); }
-.badge-amber  { background: color-mix(in srgb, var(--accent-warn) 14%, transparent); color: var(--accent-warn); border: 1px solid color-mix(in srgb, var(--accent-warn) 50%, transparent); }
-.badge-red    { background: color-mix(in srgb, var(--accent-danger) 14%, transparent); color: var(--accent-danger); border: 1px solid color-mix(in srgb, var(--accent-danger) 45%, transparent); }
-.badge-purple { background: color-mix(in srgb, var(--accent-ai) 14%, transparent); color: var(--accent-ai); border: 1px solid color-mix(in srgb, var(--accent-ai) 45%, transparent); }
-.badge-blue   { background: color-mix(in srgb, var(--accent-human) 14%, transparent); color: var(--accent-human); border: 1px solid color-mix(in srgb, var(--accent-human) 40%, transparent); }
+/* Badge colours by role. The hue-named selectors (.badge-cyan, …) are
+   deprecated aliases kept so older decks render; removed next minor. */
+.badge-primary, .badge-cyan   { background: color-mix(in srgb, var(--accent-primary) 12%, transparent); color: var(--accent-primary); border: 1px solid color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+.badge-success, .badge-green  { background: color-mix(in srgb, var(--accent-success) 12%, transparent); color: var(--accent-success); border: 1px solid color-mix(in srgb, var(--accent-success) 40%, transparent); }
+.badge-warn, .badge-amber     { background: color-mix(in srgb, var(--accent-warn) 14%, transparent); color: var(--accent-warn); border: 1px solid color-mix(in srgb, var(--accent-warn) 50%, transparent); }
+.badge-danger, .badge-red     { background: color-mix(in srgb, var(--accent-danger) 14%, transparent); color: var(--accent-danger); border: 1px solid color-mix(in srgb, var(--accent-danger) 45%, transparent); }
+.badge-ai, .badge-purple      { background: color-mix(in srgb, var(--accent-ai) 14%, transparent); color: var(--accent-ai); border: 1px solid color-mix(in srgb, var(--accent-ai) 45%, transparent); }
+.badge-human, .badge-blue     { background: color-mix(in srgb, var(--accent-human) 14%, transparent); color: var(--accent-human); border: 1px solid color-mix(in srgb, var(--accent-human) 40%, transparent); }
 
 /* ========================================================================
    Code / Terminal

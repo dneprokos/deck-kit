@@ -14,7 +14,7 @@
 | 01 | 01-cover.html | cover | free-text |
 | 02 | 02-quote.html | quote | free-text |
 | 03 | 03-concept.html | concept | free-text |
-| 04 | 04-phase-1.html | phase (cyan) | free-text |
+| 04 | 04-phase-1.html | phase (primary) | free-text |
 | 05 | 05-demo-1-tests.html | terminal-demo | free-text |
 | 06 | 06-refactor-flow.html | flow | free-text |
 | 07 | 07-gate-review.html | gate-review | free-text |

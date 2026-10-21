@@ -101,6 +101,15 @@ in a slide, or ships a `theme.css` missing a token.
 before the rename keep rendering. **Never use them in new slides** — they are
 removed in the next minor release.
 
+Classes follow the same role names. Colour modifiers are always one of
+`primary`, `human`, `success`, `warn`, `danger`, `ai`, `highlight`:
+`badge-<role>`, `body.phase-<role>`, `.pill.<role>`, `.pattern-card.<role>`,
+`.flow-node.node-<role>`. Never put a hue in a class name (`badge-cyan`,
+`.pill.amber`) — a hue is a property of the theme, not of the slide.
+`shared.css` / `phase-shared.css` keep `badge-<hue>` and `phase-<hue>` as
+deprecated aliases for older decks. `.pattern-card.warn` used to mean red;
+it is now `.pattern-card.danger`, and `.warn` means the warn role.
+
 ## Semantic legend — which colour for what
 
 | Accent | Use for | Don't use for |

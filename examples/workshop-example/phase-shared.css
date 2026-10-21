@@ -1,7 +1,7 @@
 /* ========================================================================
    Phase slide — shared layout.
    Used by 07, 10, 13, 15, 17, 19, 21, 23, 24.
-   Colour picked via body class: phase-cyan | phase-green | phase-amber | phase-red | phase-blue | phase-purple
+   Colour picked via body class: phase-primary | phase-success | phase-warn | phase-danger | phase-human | phase-ai
    ======================================================================== */
 
 .phase-slide {
@@ -16,12 +16,12 @@
 }
 
 /* Accent colour set per phase */
-body.phase-cyan   { --phase-accent: var(--accent-primary);   --phase-glow: 0 0 22px color-mix(in srgb, var(--accent-primary) 25%, transparent);  }
-body.phase-blue   { --phase-accent: var(--accent-human);   --phase-glow: 0 0 22px color-mix(in srgb, var(--accent-human) 28%, transparent); }
-body.phase-green  { --phase-accent: var(--accent-success);  --phase-glow: 0 0 22px color-mix(in srgb, var(--accent-success) 28%, transparent);  }
-body.phase-amber  { --phase-accent: var(--accent-warn);  --phase-glow: 0 0 22px color-mix(in srgb, var(--accent-warn) 30%, transparent); }
-body.phase-red    { --phase-accent: var(--accent-danger);    --phase-glow: 0 0 22px color-mix(in srgb, var(--accent-danger) 28%, transparent);  }
-body.phase-purple { --phase-accent: var(--accent-ai); --phase-glow: 0 0 24px color-mix(in srgb, var(--accent-ai) 28%, transparent);  }
+body.phase-primary   { --phase-accent: var(--accent-primary);   --phase-glow: 0 0 22px color-mix(in srgb, var(--accent-primary) 25%, transparent);  }
+body.phase-human   { --phase-accent: var(--accent-human);   --phase-glow: 0 0 22px color-mix(in srgb, var(--accent-human) 28%, transparent); }
+body.phase-success  { --phase-accent: var(--accent-success);  --phase-glow: 0 0 22px color-mix(in srgb, var(--accent-success) 28%, transparent);  }
+body.phase-warn  { --phase-accent: var(--accent-warn);  --phase-glow: 0 0 22px color-mix(in srgb, var(--accent-warn) 30%, transparent); }
+body.phase-danger    { --phase-accent: var(--accent-danger);    --phase-glow: 0 0 22px color-mix(in srgb, var(--accent-danger) 28%, transparent);  }
+body.phase-ai { --phase-accent: var(--accent-ai); --phase-glow: 0 0 24px color-mix(in srgb, var(--accent-ai) 28%, transparent);  }
 
 /* ===== Header ===== */
 .phase-header {
@@ -371,29 +371,29 @@ body.phase-purple { --phase-accent: var(--accent-ai); --phase-glow: 0 0 24px col
 }
 
 /* Extra pattern/quote variants per phase */
-.pattern-card.warn {
+.pattern-card.danger {
   background: linear-gradient(135deg in srgb, color-mix(in srgb, var(--accent-danger) 5%, transparent), color-mix(in srgb, var(--accent-warn) 3%, transparent));
   border-color: color-mix(in srgb, var(--accent-danger) 22%, transparent);
 }
-.pattern-card.warn .pattern-icon,
-.pattern-card.warn .pattern-title,
-.pattern-card.warn .pattern-text strong { color: var(--accent-danger); }
+.pattern-card.danger .pattern-icon,
+.pattern-card.danger .pattern-title,
+.pattern-card.danger .pattern-text strong { color: var(--accent-danger); }
 
-.pattern-card.green {
+.pattern-card.success {
   background: linear-gradient(135deg in srgb, color-mix(in srgb, var(--accent-success) 5%, transparent), color-mix(in srgb, var(--accent-primary) 3%, transparent));
   border-color: color-mix(in srgb, var(--accent-success) 22%, transparent);
 }
-.pattern-card.green .pattern-icon,
-.pattern-card.green .pattern-title,
-.pattern-card.green .pattern-text strong { color: var(--accent-success); }
+.pattern-card.success .pattern-icon,
+.pattern-card.success .pattern-title,
+.pattern-card.success .pattern-text strong { color: var(--accent-success); }
 
-.pattern-card.purple {
+.pattern-card.ai {
   background: linear-gradient(135deg in srgb, color-mix(in srgb, var(--accent-ai) 6%, transparent), color-mix(in srgb, var(--accent-human) 3%, transparent));
   border-color: color-mix(in srgb, var(--accent-ai) 25%, transparent);
 }
-.pattern-card.purple .pattern-icon,
-.pattern-card.purple .pattern-title,
-.pattern-card.purple .pattern-text strong { color: var(--accent-ai); }
+.pattern-card.ai .pattern-icon,
+.pattern-card.ai .pattern-title,
+.pattern-card.ai .pattern-text strong { color: var(--accent-ai); }
 
 /* Presenter mode tweaks */
 body.presenter .phase-title { font-size: 3.1rem; }

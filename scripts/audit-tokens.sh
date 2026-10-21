@@ -61,6 +61,27 @@ for f in *.html; do
   fi
 done
 
+# ----- 1d. Hue names in classes and deprecated hue tokens -----
+# Colour modifiers and tokens are named by role (primary, human, success,
+# warn, danger, ai, highlight); the theme decides the hue. shared.css keeps
+# hue-named aliases only so older decks render — new slides must not use them.
+HUE='cyan|blue|green|amber|red|purple|gold'
+for f in *.html; do
+  [[ -e "$f" ]] || continue
+  offending=$(grep -noE \
+    -e "--(accent|glow)-(${HUE})\b" \
+    -e "\b(badge|phase|node)-(${HUE})\b" \
+    -e "\.(pill|pattern-card)\.(${HUE})\b" \
+    -e "class=\"[^\"]*\b(pill|pattern-card)\b[^\"]*\b(${HUE})\b[^\"]*\"" \
+    -e "class=\"[^\"]*\b(${HUE})\b[^\"]*\b(pill|pattern-card)\b[^\"]*\"" \
+    "$f" || true)
+  if [[ -n "$offending" ]]; then
+    while IFS= read -r hit; do
+      fail "$f: hue-named class or token → $hit (use the role name: primary|human|success|warn|danger|ai|highlight)"
+    done <<< "$offending"
+  fi
+done
+
 # ----- 1c. Theme completeness + no per-slide token overrides -----
 # The reference theme (assets/themes/cyberpunk.css) defines the required
 # token set. The deck's theme.css must define every one of them, and no
