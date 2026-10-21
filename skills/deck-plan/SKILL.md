@@ -46,7 +46,7 @@ If the user clearly wants finished slides right now and a
 1. **One scoping question at a time.** Use `AskUserQuestion` with the
    canned payloads from
    [`references/scoping-questions.md`](references/scoping-questions.md)
-   — Q0 through Q8, in order. Skip only the questions the reference
+   — Q0 through Q9, in order. Skip only the questions the reference
    marks skippable (Q5 for non-workshops).
 2. **Content is sourced, never invented.** Every planned slide cites a
    source span (line range, marker anchor, or explicit `free-text`
@@ -65,9 +65,9 @@ If the user clearly wants finished slides right now and a
 
 ## Flow
 
-### 1 · Scoping (Q0-Q8)
+### 1 · Scoping (Q0-Q9)
 
-Ask Q0 (deck type) → Q1 (source) → Q2-Q8, one at a time, payloads from
+Ask Q0 (deck type) → Q1 (source) → Q2-Q9, one at a time, payloads from
 [`references/scoping-questions.md`](references/scoping-questions.md).
 Routing details per type: [`references/deck-types.md`](references/deck-types.md).
 
@@ -110,7 +110,7 @@ approved.
 
 Write `<output-dir>/.planning/deck-spec.md` exactly per
 [`../_shared/deck-spec-format.md`](../_shared/deck-spec-format.md):
-header fields from Q0-Q8 answers + marker map + the approved slide-plan
+header fields from Q0-Q9 answers + marker map + the approved slide-plan
 lines. Then tell the user:
 
 > Plan approved and saved to `<output-dir>/.planning/deck-spec.md`.
@@ -119,7 +119,7 @@ lines. Then tell the user:
 
 ## Red flags — stop and reconsider
 
-- "The topic is familiar, I can skip scoping." → No. Always run Q0-Q8.
+- "The topic is familiar, I can skip scoping." → No. Always run Q0-Q9.
   Plan quality depends on scoping precision.
 - "User said 'slides' without a type — I'll assume workshop." → No.
   Ask Q0 first; lecture/talk have different defaults and archetypes.
@@ -133,7 +133,7 @@ lines. Then tell the user:
 ## References
 
 - [`references/scoping-questions.md`](references/scoping-questions.md) —
-  canned `AskUserQuestion` payloads Q0-Q8 + marker follow-up + plan review.
+  canned `AskUserQuestion` payloads Q0-Q9 + marker follow-up + plan review.
 - [`references/deck-types.md`](references/deck-types.md) — the three
   deck types, signals, defaults, archetype mixes.
 - [`references/archetype-catalog.md`](references/archetype-catalog.md) —

@@ -26,6 +26,8 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/audit-static.sh" <deck-dir>
 1. Every `.html` file (slides + index) has closing `</body>` and `</html>`.
 2. Every slide file (not index) has `<link rel="stylesheet" href="shared.css">`
    and `<script src="shared.js"` in the body / head.
+2b. `theme.css` exists and `shared.css` contains `@import url("theme.css")`
+   — without it every colour token is unset.
 3. `index.html` includes `shared.js` **without** `defer` (see the gotcha
    in `navigation-contract.md`).
 4. `SLIDES.length` in `shared.js` equals the count of `NN-*.html` files in
@@ -47,14 +49,17 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/audit-tokens.sh" <deck-dir>
    titlebar dots (`#ff5f56`, `#ffbd2e`, `#27c93f`), a fixed convention.
 2. No `rgb()`, `rgba()`, `hsl()` or `hsla()` with numeric arguments —
    translucent colours are `color-mix(in srgb, var(--token) N%, transparent)`.
-3. No `font-family:` outside `:root` (inside `<style>` blocks should use
+3. `theme.css` defines every token of the reference theme
+   (`assets/themes/cyberpunk.css`), and no slide redefines one of those
+   tokens (e.g. `:root { --accent-primary: … }` in a slide `<style>`).
+4. No `font-family:` outside `:root` (inside `<style>` blocks should use
    `var(--font-sans)` or `var(--font-mono)` only).
-4. No `!important` in slide-level `<style>` blocks (framework styles own
+5. No `!important` in slide-level `<style>` blocks (framework styles own
    specificity; slide overrides should be naturally more specific).
 
-Checks 1–2 keep every colour on a `:root` token, so swapping the palette in
-`shared.css` re-themes the deck. A colour no token covers is a new token in
-`:root` (see `design-tokens.md`), never a literal on the slide.
+Checks 1–3 keep every colour on a theme token, so swapping `theme.css`
+re-themes the deck. A colour no token covers is a new token in
+`theme.css` (see `design-tokens.md`), never a literal on the slide.
 
 ## Gate 3 — HTTP smoke (runtime reachability)
 
@@ -70,6 +75,7 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/audit-http.sh" <deck-dir>
 4. `curl -sI` the following URLs, expect HTTP 200 on every one:
    - `/index.html`
    - `/shared.css`
+   - `/theme.css`
    - `/shared.js`
    - `/demo-runner.js` (if the deck uses it — check by grepping for
      `demo-runner.js` in any slide)

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # audit-tokens.sh <deck-dir>
 # Gate 2: design-token integrity.
-# Fails on hardcoded hex colours outside the allow-list, font-family
+# Fails on hardcoded hex colours and raw colour functions in slides, an
+# incomplete theme.css or per-slide theme-token overrides, font-family
 # declarations outside :root, and !important in slide styles.
 
 set -euo pipefail
@@ -11,6 +12,9 @@ if [[ -z "$DECK" || ! -d "$DECK" ]]; then
   echo "usage: audit-tokens.sh <deck-dir>" >&2
   exit 2
 fi
+
+# Resolve before cd — BASH_SOURCE may be a relative path.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd "$DECK"
 
@@ -37,7 +41,7 @@ for f in *.html; do
     | sort -u || true)
   if [[ -n "$offending" ]]; then
     while IFS= read -r hex; do
-      fail "$f: hardcoded hex $hex (use var(--token); add a token to :root in shared.css if none fits)"
+      fail "$f: hardcoded hex $hex (use var(--token); add a token to theme.css if none fits)"
     done <<< "$offending"
   fi
 done
@@ -56,6 +60,34 @@ for f in *.html; do
     done <<< "$offending"
   fi
 done
+
+# ----- 1c. Theme completeness + no per-slide token overrides -----
+# The reference theme (assets/themes/cyberpunk.css) defines the required
+# token set. The deck's theme.css must define every one of them, and no
+# slide may redefine one — a per-slide override silently escapes the theme.
+REF_THEME="$SCRIPT_DIR/../assets/themes/cyberpunk.css"
+if [[ -f "$REF_THEME" ]]; then
+  required=$(grep -oE '^\s*--[a-z0-9-]+\s*:' "$REF_THEME" | sed -E 's/^\s*(--[a-z0-9-]+).*/\1/' | sort -u)
+  if [[ -f theme.css ]]; then
+    defined=$(grep -oE '^\s*--[a-z0-9-]+\s*:' theme.css | sed -E 's/^\s*(--[a-z0-9-]+).*/\1/' | sort -u)
+    missing=$(comm -23 <(echo "$required") <(echo "$defined"))
+    if [[ -n "$missing" ]]; then
+      while IFS= read -r tok; do
+        fail "theme.css: missing required token $tok"
+      done <<< "$missing"
+    fi
+  fi
+  token_re=$(echo "$required" | paste -sd '|' -)
+  for f in *.html; do
+    [[ -e "$f" ]] || continue
+    offending=$(grep -noE "(${token_re})\s*:" "$f" || true)
+    if [[ -n "$offending" ]]; then
+      while IFS= read -r hit; do
+        fail "$f: redefines theme token → $hit (change theme.css, not the slide)"
+      done <<< "$offending"
+    fi
+  done
+fi
 
 # ----- 2. font-family declarations outside shared.css / phase-shared.css / demo-shared.css -----
 # Slide-level <style> blocks should only use var(--font-sans|mono).

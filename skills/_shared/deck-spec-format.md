@@ -22,6 +22,7 @@ lines are machine-checkable (evals and CI parse them with a regex).
 - presenter_scale: 1.15 | 1.25 | 1.35 | none
 - output_dir: <path>
 - language: <BCP-47 code, e.g. en, uk, de>
+- theme: <shipped theme name, e.g. cyberpunk | "custom (<colours as given>)">
 - marker_map: <"standard" | comma-separated pairs like "[ZEIGEN]=[SHOW], [SAGEN]=[SAY]" | "none">
 
 ## Slide plan

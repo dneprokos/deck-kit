@@ -1,19 +1,39 @@
 # Design Tokens — Frozen Palette
 
-The entire visual language of a deck lives in `:root` inside
-`shared.css`. **Never hardcode colour values** — reference them via `var(...)`.
-Adding a new token requires a deliberate decision, not casual expansion.
+The entire visual language of a deck lives in tokens. Colours, glows and
+font families are in the deck's `theme.css` (a copy of one of
+`assets/themes/*.css`); layout, radii and base font size are in `:root`
+inside `shared.css`, which `@import`s `theme.css`. **Never hardcode colour
+values** — reference them via `var(...)`. Adding a new token requires a
+deliberate decision, not casual expansion.
 
 ## Why tokens are frozen
 
 A deck's look emerges from a narrow palette plus discipline. If every slide
 picks its own shade of the primary accent, the deck loses its coherence. And
-because every colour on every slide resolves to a token, swapping the values
-in `:root` re-themes the whole deck at once — but only if no slide bypasses
+because every colour on every slide resolves to a token, swapping
+`theme.css` re-themes the whole deck at once — but only if no slide bypasses
 the tokens. The `audit-tokens.sh` gate fails a deck that introduces hex or
-`rgb()/rgba()/hsl()/hsla()` literals in slide HTML.
+`rgb()/rgba()/hsl()/hsla()` literals in slide HTML, redefines a theme token
+in a slide, or ships a `theme.css` missing a token.
 
-## The `:root` block (verbatim)
+## Themes
+
+- Shipped themes live in `assets/themes/<name>.css`; each is one `:root`
+  block and nothing else. `new-skeleton.sh --theme=<name>` copies the
+  chosen one to `<deck>/theme.css`.
+- `cyberpunk.css` is the **reference theme**: the set of tokens it defines
+  is the required set. Every other theme, and every deck's `theme.css`,
+  must define all of them (Gate 2 and `validate_plugin.py` check).
+- A theme may change any value, including the font families and the glows
+  (a flat theme sets `--glow-*: none`). It never renames or drops a token.
+- To add a shipped theme: copy `cyberpunk.css`, change the values and the
+  header comment (the first line after `Theme:` is what deck-plan's Q9
+  shows the user), then run `npm run validate`.
+- To customise one deck: edit its `theme.css` directly. Re-running
+  `new-skeleton.sh` without `--theme` keeps it.
+
+## The reference theme (`assets/themes/cyberpunk.css`, verbatim tokens)
 
 ```css
 :root {
@@ -51,20 +71,23 @@ the tokens. The `audit-tokens.sh` gate fails a deck that introduces hex or
   /* Typography */
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "SF Mono", "Fira Code", "JetBrains Mono", Menlo, monospace;
-  --base-font: 16px;
 
-  /* Layout */
-  --min-width: 1280px;    /* Desktop-only — do not support smaller */
-  --max-content: 1400px;  /* Inner frame */
-  --slide-padding: 32px;
-
-  /* Glows (for box-shadow on accented cards) */
+  /* Glows (box-shadow on accented cards; a flat theme sets these to none) */
   --glow-primary: 0 0 22px color-mix(in srgb, var(--accent-primary) 25%, transparent);
   --glow-warn:    0 0 22px color-mix(in srgb, var(--accent-warn) 35%, transparent);
   --glow-success: 0 0 22px color-mix(in srgb, var(--accent-success) 28%, transparent);
   --glow-ai:      0 0 26px color-mix(in srgb, var(--accent-ai) 30%, transparent);
+}
+```
 
-  /* Radii */
+## Theme-independent tokens (`shared.css` `:root`)
+
+```css
+:root {
+  --base-font: 16px;
+  --min-width: 1280px;    /* Desktop-only — do not support smaller */
+  --max-content: 1400px;  /* Inner frame */
+  --slide-padding: 32px;
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
@@ -156,11 +179,15 @@ inline SVG resolve custom properties like any other element:
 1. Open an explicit discussion with the user (`AskUserQuestion`).
 2. Never add a new accent without first asking: "Can one of the existing
    accents carry the new meaning?"
-3. If the answer is still "no new accent", the new variable lands in
-   `:root` inside `shared.css`, not inline on a slide.
+3. If the answer is still "no new accent", the new colour token lands in
+   the deck's `theme.css`, not inline on a slide. A token meant for every
+   deck goes into **every** file in `assets/themes/` in the same change —
+   the reference theme defines the required set, so adding it only to
+   `cyberpunk.css` fails every other theme.
 4. A softer or darker variant of an existing colour is not a new token —
-   write it as `color-mix(in srgb, var(--token) N%, transparent)` (lighter
-   on the dark background) or `color-mix(in srgb, var(--token) N%, var(--bg-deep))`.
+   write it as `color-mix(in srgb, var(--token) N%, transparent)` (a
+   translucent wash) or `color-mix(in srgb, var(--token) N%, var(--bg-deep))`
+   (an opaque blend toward the background).
 5. Update this reference file in the same change so future generations stay
    consistent.
 

@@ -232,7 +232,9 @@ def main() -> int:
     print("== asset ↔ skeleton consistency ==")
     skeleton = (ROOT / "scripts" / "new-skeleton.sh").read_text()
     asset_files = {p.name for p in (ROOT / "assets").iterdir() if p.is_file()}
-    referenced = set(re.findall(r"\$ASSETS/([\w.-]+)", skeleton))
+    # Directory refs ($ASSETS/themes/<name>.css) are covered by the theme check.
+    referenced = {r for r in re.findall(r"\$ASSETS/([\w.-]+)", skeleton)
+                  if not (ROOT / "assets" / r).is_dir()}
     missing = sorted(referenced - asset_files)
     unused = sorted(asset_files - referenced)
     check(not missing,
@@ -241,6 +243,22 @@ def main() -> int:
     check(not unused,
           "every file in assets/ is copied by new-skeleton.sh",
           f"assets/ files never copied by new-skeleton.sh: {unused}")
+
+    # --- theme completeness ---
+    # assets/themes/cyberpunk.css is the reference token set; every shipped
+    # theme must define all of it (Gate 2 enforces the same on decks).
+    print("== themes ==")
+    themes_dir = ROOT / "assets" / "themes"
+    token_re = re.compile(r"^\s*(--[a-z0-9-]+)\s*:", re.M)
+    reference = themes_dir / "cyberpunk.css"
+    check(reference.is_file(), "reference theme assets/themes/cyberpunk.css exists",
+          "assets/themes/cyberpunk.css missing")
+    if reference.is_file():
+        required = set(token_re.findall(reference.read_text(encoding="utf-8")))
+        for theme in sorted(themes_dir.glob("*.css")):
+            gaps = sorted(required - set(token_re.findall(theme.read_text(encoding="utf-8"))))
+            check(not gaps, f"theme {theme.stem} defines all {len(required)} tokens",
+                  f"theme {theme.stem} missing tokens: {gaps}")
 
     # --- archetype catalog ↔ blueprint coverage ---
     # Every archetype in the plan-side catalog must have a build-side

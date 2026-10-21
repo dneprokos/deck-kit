@@ -79,10 +79,10 @@ User can override via Q6 (`AskUserQuestion`).
 
 ```
 Q0 deck_type?  (workshop | lecture | talk)
-   └── Q1-Q8 (source, identity, sections, archetypes, demos*,
-              presenter scale, output dir, language)
+   └── Q1-Q9 (source, identity, sections, archetypes, demos*,
+              presenter scale, output dir, language, theme)
        * Q5 demos asked only for workshop
 ```
 
-After Q0-Q8 complete, the slide plan is drafted and written to
+After Q0-Q9 complete, the slide plan is drafted and written to
 `.planning/deck-spec.md` (format: `_shared/deck-spec-format.md`).

@@ -55,6 +55,7 @@ check_url() {
 # Always-checked entries.
 check_url "/index.html"
 check_url "/shared.css"
+check_url "/theme.css"
 check_url "/shared.js"
 
 # demo-runner.js only if any slide references it.

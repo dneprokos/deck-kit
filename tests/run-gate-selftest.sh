@@ -36,10 +36,14 @@ PY
 }
 
 # Build a broken deck: scaffold + overlay one fixture slide + register it.
+# A fixture may also ship theme.css, which replaces the scaffolded theme.
 make_fixture_deck() { # <fixture-name>
   local name="$1" deck="$TMP/$1"
   bash "$ROOT/scripts/new-skeleton.sh" --type=talk "$deck" >/dev/null
   cp "$ROOT/tests/fixtures/$name"/*.html "$deck/"
+  if [[ -f "$ROOT/tests/fixtures/$name/theme.css" ]]; then
+    cp "$ROOT/tests/fixtures/$name/theme.css" "$deck/theme.css"
+  fi
   register_slides "$deck" $(cd "$ROOT/tests/fixtures/$name" && ls *.html)
   echo "$deck"
 }
@@ -68,8 +72,8 @@ else
 fi
 
 echo "== B · negative: each fixture fails exactly its own gate =="
-declare -a NAMES=(broken-static broken-tokens broken-tokens-rgba broken-visual)
-declare -a GATES=(1 2 2 4)
+declare -a NAMES=(broken-static broken-tokens broken-tokens-rgba broken-theme broken-theme-override broken-visual)
+declare -a GATES=(1 2 2 2 2 4)
 for i in "${!NAMES[@]}"; do
   name="${NAMES[$i]}"; target="${GATES[$i]}"
   deck="$(make_fixture_deck "$name")"

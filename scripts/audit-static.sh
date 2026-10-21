@@ -30,6 +30,15 @@ for f in [0-9][0-9]-*.html; do
   if ! grep -q 'src="shared\.js"' "$f"; then fail "$f: missing shared.js script"; fi
 done
 
+# ----- 2b. theme.css present and imported by shared.css -----
+# shared.css defines no colours; without theme.css every token is unset.
+if [[ ! -f theme.css ]]; then
+  fail "theme.css missing (scaffold with new-skeleton.sh --theme=<name>)"
+fi
+if [[ -f shared.css ]] && ! grep -qE '@import url\("theme\.css"\)' shared.css; then
+  fail "shared.css: missing @import url(\"theme.css\")"
+fi
+
 # ----- 3. index.html must NOT use defer on shared.js (gotcha) -----
 if [[ -f index.html ]]; then
   if grep -E 'src="shared\.js"[^>]*\bdefer\b' index.html >/dev/null 2>&1; then

@@ -49,7 +49,7 @@ index of every slide.
 ```
 
 Answer the scoping questions (deck type, identity, sections, archetypes,
-language, …), review the drafted slide plan as one block, approve. The
+language, theme, …), review the drafted slide plan as one block, approve. The
 plan lands in `deck/.planning/deck-spec.md`.
 
 ```
@@ -64,6 +64,22 @@ it is generated. After the last slide, the 4 gates run. All green:
 cd deck && python3 -m http.server 8765
 # open http://localhost:8765 — arrows/Space to navigate, Esc for the grid
 ```
+
+## Themes
+
+All colours, glows and font families come from the deck's `theme.css`,
+copied from `assets/themes/<name>.css` at scaffold time and loaded by
+`shared.css`. Slides reference tokens only (`var(--accent-primary)`), so
+replacing `theme.css` re-themes the whole deck. Pick a theme during
+scoping, or ask for a custom palette and the build fills in the rest of
+the tokens with you.
+
+| Theme | Look |
+|---|---|
+| `cyberpunk` (default) | Near-black navy, neon accents, soft glows |
+
+Add a theme by copying `assets/themes/cyberpunk.css` and changing the
+values. It must keep every token — `npm run validate` and Gate 2 check.
 
 Already have a deck? Validate it without touching content:
 

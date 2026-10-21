@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# new-skeleton.sh [--type=workshop|lecture|talk] <target-dir>
+# new-skeleton.sh [--type=workshop|lecture|talk] [--theme=<name>] <target-dir>
 #
 # Scaffold an empty presentation deck directory by copying assets/* from the
 # skill install into <target-dir>. Leaves SLIDES empty so the skill can
@@ -14,12 +14,17 @@
 #   talk               — shared.css/js, index.html
 #                        (no phase or demo assets)
 #
+# --theme picks assets/themes/<name>.css, copied to <target-dir>/theme.css
+# (shared.css @imports it). Default: cyberpunk.
+#
 # Idempotent: running again on the same dir refreshes shared files but
-# does not clobber existing slide files.
+# does not clobber existing slide files, index.html, or theme.css — an
+# existing theme.css is replaced only when --theme is passed explicitly.
 
 set -euo pipefail
 
 TYPE="workshop"
+THEME=""
 TARGET=""
 
 for arg in "$@"; do
@@ -29,6 +34,13 @@ for arg in "$@"; do
       ;;
     --type)
       echo "error: --type requires value, e.g. --type=workshop" >&2
+      exit 2
+      ;;
+    --theme=*)
+      THEME="${arg#*=}"
+      ;;
+    --theme)
+      echo "error: --theme requires value, e.g. --theme=cyberpunk" >&2
       exit 2
       ;;
     -*)
@@ -47,7 +59,7 @@ for arg in "$@"; do
 done
 
 if [[ -z "$TARGET" ]]; then
-  echo "usage: new-skeleton.sh [--type=workshop|lecture|talk] <target-dir>" >&2
+  echo "usage: new-skeleton.sh [--type=workshop|lecture|talk] [--theme=<name>] <target-dir>" >&2
   exit 2
 fi
 
@@ -68,6 +80,12 @@ if [[ ! -d "$ASSETS" ]]; then
   exit 1
 fi
 
+if [[ -n "$THEME" && ! -f "$ASSETS/themes/$THEME.css" ]]; then
+  available=$(cd "$ASSETS/themes" && ls *.css | sed 's/\.css$//' | paste -sd '|' -)
+  echo "error: unknown --theme=$THEME (available: $available)" >&2
+  exit 2
+fi
+
 mkdir -p "$TARGET"
 mkdir -p "$TARGET/.planning"
 mkdir -p "$TARGET/.audit/screenshots"
@@ -75,6 +93,15 @@ mkdir -p "$TARGET/.audit/screenshots"
 # Always-copied core assets.
 cp "$ASSETS/shared.css" "$TARGET/shared.css"
 cp "$ASSETS/shared.js"  "$TARGET/shared.js"
+
+# Theme: explicit --theme always wins; otherwise keep an existing theme.css
+# (it may be hand-tuned) and seed the default only when none exists.
+if [[ -n "$THEME" ]]; then
+  cp "$ASSETS/themes/$THEME.css" "$TARGET/theme.css"
+elif [[ ! -f "$TARGET/theme.css" ]]; then
+  THEME="cyberpunk"
+  cp "$ASSETS/themes/$THEME.css" "$TARGET/theme.css"
+fi
 
 # Type-specific asset subsets.
 case "$TYPE" in
@@ -119,6 +146,7 @@ if [[ ! -f "$TARGET/.planning/deck-spec.md" ]]; then
 - presenter_scale:
 - output_dir:
 - language:
+- theme: ${THEME:-custom}
 - marker_map:
 
 ## Slide plan
@@ -128,5 +156,5 @@ if [[ ! -f "$TARGET/.planning/deck-spec.md" ]]; then
 EOF
 fi
 
-echo "scaffold ok (type=$TYPE): $TARGET"
+echo "scaffold ok (type=$TYPE, theme=${THEME:-kept existing theme.css}): $TARGET"
 ls -1 "$TARGET"
