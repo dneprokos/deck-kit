@@ -5,8 +5,9 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "validate": "python3 scripts/validate_plugin.py",
-    "selftest": "bash tests/run-gate-selftest.sh"
+    "validate": "python scripts/validate_plugin.py",
+    "selftest": "node scripts/run-bash.mjs tests/run-gate-selftest.sh",
+    "serve": "node scripts/serve.mjs"
   },
   "devDependencies": {
     "playwright": "1.59.1"

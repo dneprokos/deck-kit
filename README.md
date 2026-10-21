@@ -13,9 +13,9 @@ Two skills split the work the way a speaker actually prepares:
   design-token system, and refuses to call the deck done until it passes
   **4 independent validation gates**.
 
-The output is plain HTML — no framework, no build step. `python3 -m
-http.server` and present: keyboard navigation, presenter mode, a grid
-index of every slide.
+The output is plain HTML — no framework, no build step. Serve the folder
+(`node scripts/serve.mjs <deck>`) and present: keyboard navigation,
+presenter mode, a grid index of every slide.
 
 ## Install
 
@@ -26,9 +26,11 @@ index of every slide.
 
 ## Prerequisites
 
-- **Python 3** — serves the deck locally (`http.server`) and runs the
-  HTTP smoke gate.
-- **Node 18+** — runs the visual validation gate.
+- **Node 18+** — serves the deck (`scripts/serve.mjs`) and runs the HTTP
+  smoke and visual gates.
+- **Bash + curl** — Gates 1-3 are bash scripts. On Windows that means
+  Git Bash (ships with [Git for Windows](https://git-scm.com/download/win),
+  curl included); Claude Code already runs its shell commands through it.
 - **Playwright + Chromium** — Gate 4 renders every slide at 1920×1080 in
   headless Chromium, screenshots it, and fails on overflow or JS errors.
   Install it **in the project where you build decks** (the plugin finds
@@ -49,7 +51,7 @@ index of every slide.
 ```
 
 Answer the scoping questions (deck type, identity, sections, archetypes,
-language, …), review the drafted slide plan as one block, approve. The
+language, theme, …), review the drafted slide plan as one block, approve. The
 plan lands in `deck/.planning/deck-spec.md`.
 
 ```
@@ -61,9 +63,26 @@ span come pre-filled from the spec; you confirm or adjust each slide as
 it is generated. After the last slide, the 4 gates run. All green:
 
 ```
-cd deck && python3 -m http.server 8765
-# open http://localhost:8765 — arrows/Space to navigate, Esc for the grid
+node "<deck-kit>/scripts/serve.mjs" deck 8080
+# open http://127.0.0.1:8080 — arrows/Space to navigate, Esc for the grid
+# (omit the port to let the OS pick one; the URL is printed on start)
 ```
+
+## Themes
+
+All colours, glows and font families come from the deck's `theme.css`,
+copied from `assets/themes/<name>.css` at scaffold time and loaded by
+`shared.css`. Slides reference tokens only (`var(--accent-primary)`), so
+replacing `theme.css` re-themes the whole deck. Pick a theme during
+scoping, or ask for a custom palette and the build fills in the rest of
+the tokens with you.
+
+| Theme | Look |
+|---|---|
+| `cyberpunk` (default) | Near-black navy, neon accents, soft glows |
+
+Add a theme by copying `assets/themes/cyberpunk.css` and changing the
+values. It must keep every token — `npm run validate` and Gate 2 check.
 
 Already have a deck? Validate it without touching content:
 
@@ -161,13 +180,16 @@ mapping in the spec. Details:
 git clone https://github.com/genkovich/deck-kit && cd deck-kit
 npm install && npx playwright install chromium
 
-npm run validate   # plugin structure, manifests, forbidden tokens, link + archetype consistency
+npm run validate   # plugin structure, manifests, themes, forbidden tokens, link + archetype consistency
 npm run selftest   # gate self-test: positive example 4/4 + per-gate broken fixtures
+npm run serve -- <deck-dir> [port]   # serve a deck for presenting
 ```
 
-Both run in CI on every push (`.github/workflows/validate.yml`); the
-gate self-test runs on ubuntu **and** macos (the HTTP gate exercises
-`lsof`/BSD differences).
+Both run in CI on every push to `main` and every pull request
+(`.github/workflows/validate.yml`, also runnable by hand); the gate
+self-test runs on ubuntu **and** windows. On Windows, `npm run selftest`
+goes through `scripts/run-bash.mjs`, which picks Git Bash — a bare `bash`
+from `cmd.exe` resolves to WSL's launcher instead.
 
 Skill evals live in `skills/*/evals/evals.json` (skill-creator format):
 plan-from-source, plan-from-thesis, build-from-spec, audit-broken-deck.

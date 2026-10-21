@@ -10,7 +10,7 @@
       "name": "deck-kit",
       "source": "./",
       "version": "0.1.0",
-      "description": "Two-skill pipeline for presenter-grade HTML decks: deck-plan (source → reviewed slide plan) and deck-build (plan → Socratic per-slide HTML generation → 4 validation gates: static, tokens, HTTP smoke, Playwright visual). 24 slide archetypes across workshop / lecture / talk, frozen design-token system, keyboard nav + presenter mode, plain-HTML output served with python3 -m http.server.",
+      "description": "Two-skill pipeline for presenter-grade HTML decks: deck-plan (source → reviewed slide plan) and deck-build (plan → Socratic per-slide HTML generation → 4 validation gates: static, tokens, HTTP smoke, Playwright visual). 24 slide archetypes across workshop / lecture / talk, frozen design-token system, keyboard nav + presenter mode, plain-HTML output served with a bundled Node static server.",
       "category": "productivity",
       "tags": [
         "slides",

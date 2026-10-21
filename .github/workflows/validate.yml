@@ -22,16 +22,18 @@ jobs:
     name: gate self-test (${{ matrix.os }})
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
       - name: install deps
         run: npm install
       - name: install chromium
         run: npx playwright install --with-deps chromium
+      # Through npm on purpose: on Windows this exercises run-bash.mjs, which
+      # must pick Git Bash rather than WSL's bash.exe.
       - name: run gate self-test
-        run: bash tests/run-gate-selftest.sh
+        run: npm run selftest

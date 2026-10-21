@@ -61,8 +61,9 @@ For best results serve over HTTP (avoids browser restrictions on local file
 loading):
 
 ```
-npx serve .
-# → http://localhost:3000
+# from the repo root
+node scripts/serve.mjs examples/talk-template 8080
+# → http://127.0.0.1:8080
 ```
 
 Press `→` / `Space` to advance, `←` to go back, `Esc` to return to index,

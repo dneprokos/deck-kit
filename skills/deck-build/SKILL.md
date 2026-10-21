@@ -87,6 +87,8 @@ Only when the user declined `/deck-kit:plan`:
    once per [`../_shared/content-markers.md`](../_shared/content-markers.md).
 3. **Identity** — title · speaker · date · venue (free-text).
 4. **Output dir + language** — combined question; defaults `deck/`, `en`.
+5. **Theme** — payload: Q9 in deck-plan's scoping bank; default
+   `cyberpunk`.
 
 Then scaffold and enter the per-slide loop. After EACH confirmed slide,
 append its plan line to `.planning/deck-spec.md` (see "Incremental
@@ -96,7 +98,7 @@ writing" in [`../_shared/deck-spec-format.md`](../_shared/deck-spec-format.md))
 ## Scaffold
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/scripts/new-skeleton.sh" --type=<workshop|lecture|talk> <output-dir>
+bash "${CLAUDE_PLUGIN_ROOT}/scripts/new-skeleton.sh" --type=<workshop|lecture|talk> --theme=<name> <output-dir>
 ```
 
 The type flag routes which assets get copied:
@@ -105,6 +107,19 @@ The type flag routes which assets get copied:
 - `lecture` — shared.css, shared.js, phase-shared.css, index.html (no
   demo-runner by default; add it if a terminal-demo slide is requested).
 - `talk` — shared.css, shared.js, index.html (minimal).
+
+Every type also gets `theme.css`, copied from
+`assets/themes/<name>.css`; `shared.css` loads it with `@import`. Pass the
+spec's `theme:` name. An existing `theme.css` is kept on re-scaffold
+unless `--theme` is given.
+
+**Custom theme** (`theme: custom (…)`): scaffold with `--theme=cyberpunk`,
+then edit `theme.css` in place — set the colours the user gave, propose
+values for the remaining tokens (one `AskUserQuestion` showing the full
+palette as a table: token · value · role), and apply only after the
+user confirms. Keep every token name; Gate 2 fails a theme that drops
+one. Never redefine tokens inside a slide — the theme file is the only
+place a colour value lives.
 
 Replace placeholders in `index.html`: `{{lang}}` (BCP-47 code from the
 spec's `language:`), `{{title}}`, `{{speaker}}`, `{{date}}`,
@@ -172,9 +187,10 @@ install instructions — surface them to the user, do not silently skip.
    - validation result per gate + timestamp (and any explicitly
      user-approved `--skip-visual`)
 2. Tell the user how to present:
-   `cd <output-dir> && python3 -m http.server 8765` → open
-   `http://localhost:8765` (grid) — arrows/Space to navigate, Esc back
-   to index, PRESENTER MODE toggle in the grid header.
+   `node "${CLAUDE_PLUGIN_ROOT}/scripts/serve.mjs" <output-dir> 8080` → open
+   `http://127.0.0.1:8080` (grid) — arrows/Space to navigate, Esc back
+   to index, PRESENTER MODE toggle in the grid header. (Omit the port to
+   let the OS pick one; the URL is printed on start.)
 3. Point at `.audit/screenshots/` for visual review.
 
 ## Red flags — stop and reconsider

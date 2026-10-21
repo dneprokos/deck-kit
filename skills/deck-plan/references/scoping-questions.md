@@ -15,7 +15,7 @@ verbatim (or translated) when issuing `AskUserQuestion`.
 
 ---
 
-## Upfront scoping (9 questions, one at a time)
+## Upfront scoping (10 questions, one at a time)
 
 ### Q0 — Deck type
 
@@ -138,6 +138,28 @@ Default depends on Q0: workshop 1.15×, lecture 1.25×, talk 1.35×.
 Design-system labels (`GOAL`, `INPUT`, `OUTPUT`, `GATE`, `COMMANDS`,
 `LIVE DEMO`, …) stay uppercase English regardless of Q8 — they are
 design tokens, not content.
+
+### Q9 — Theme
+
+Build the options from the theme files that ship with the plugin
+(`${CLAUDE_PLUGIN_ROOT}/assets/themes/*.css` — the file name without
+`.css` is the theme name; the header comment describes it). List at most
+three shipped themes, `cyberpunk` first as the default, then the custom
+option.
+
+**question:** "Colour theme for the deck?"
+**header:** "Theme"
+**options:**
+1. **cyberpunk (default)** — near-black navy, neon accents, soft glows.
+2. *(each other shipped theme — name + its header-comment description)*
+3. **Custom palette** — I'll give brand colours (at least a primary
+   accent and a background).
+
+Record a shipped theme by name (`theme: cyberpunk`). For a custom
+palette, record `theme: custom` and the colours exactly as the user gave
+them in the same field, e.g.
+`theme: custom (primary=#0b6bcb, background=#f6f7fb)`. Do not invent the
+remaining colours here — deck-build derives them with the user.
 
 ---
 

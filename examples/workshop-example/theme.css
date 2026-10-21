@@ -1,0 +1,51 @@
+/* ========================================================================
+   Theme: cyberpunk — near-black navy surfaces, neon accents, soft glows.
+   The reference theme: every token defined here is required in every
+   other theme (Gate 2 checks this). Copied to <deck>/theme.css by
+   new-skeleton.sh and loaded by shared.css via @import.
+   Translucent variants are written as
+   color-mix(in srgb, var(--token) N%, transparent) — never as rgba().
+   ======================================================================== */
+
+:root {
+  /* Core surfaces */
+  --bg-deep: #050912;
+  --bg-panel: #0d1424;
+  --bg-elev: #162040;
+  --bg-gradient-mid: #0a1628; /* Middle stop of the animated body gradient */
+  --bg-grid: color-mix(in srgb, var(--accent-primary) 3%, transparent);
+  --surface-tint: #fff;       /* Hairline borders, hover washes, inset fills */
+  --shadow-color: #000;       /* Drop shadows, dimmed backdrops */
+
+  /* Terminal surfaces */
+  --term-bg: #080d18;
+  --term-bar-top: #10182a;
+  --term-bar-bottom: #0a1020;
+  --term-text: #dfe6f0;
+
+  /* Accents (semantic colour coding, named by role) */
+  --accent-primary:   #00e5ff; /* Concept / process */
+  --accent-human:     #2979ff; /* Human / decisions */
+  --accent-success:   #00e676; /* Positive / complete */
+  --accent-warn:      #ffab40; /* GATE / checkpoint */
+  --accent-danger:    #ff5252; /* Feedback / warning */
+  --accent-ai:        #d500f9; /* AI / agent pool */
+  --accent-highlight: #ffd740; /* Emphasis */
+
+  /* Text */
+  --text-primary:   #e0e6f0;
+  --text-strong:    #fff;     /* Hero titles that need extra contrast */
+  --text-secondary: color-mix(in srgb, var(--text-primary) 72%, transparent);
+  --text-muted:     color-mix(in srgb, var(--text-primary) 45%, transparent);
+  --text-faint:     color-mix(in srgb, var(--text-primary) 25%, transparent);
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "SF Mono", "Fira Code", "JetBrains Mono", Menlo, monospace;
+
+  /* Glows (box-shadow on accented cards; a flat theme sets these to none) */
+  --glow-primary: 0 0 22px color-mix(in srgb, var(--accent-primary) 25%, transparent);
+  --glow-warn:    0 0 22px color-mix(in srgb, var(--accent-warn) 35%, transparent);
+  --glow-success: 0 0 22px color-mix(in srgb, var(--accent-success) 28%, transparent);
+  --glow-ai:      0 0 26px color-mix(in srgb, var(--accent-ai) 30%, transparent);
+}

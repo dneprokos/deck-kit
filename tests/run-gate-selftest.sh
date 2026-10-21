@@ -25,21 +25,25 @@ bad()  { echo "  ✗ $1"; FAIL=$((FAIL + 1)); }
 # Register slide files in a scaffolded shared.js SLIDES array.
 register_slides() { # <deck-dir> <file1> [file2 …]
   local deck="$1"; shift
-  python3 - "$deck/shared.js" "$@" <<'PY'
-import re, sys
-path, files = sys.argv[1], sys.argv[2:]
-text = open(path).read()
-entries = "\n".join(f'    {{ file: "{f}", title: "{f}" }},' for f in files)
-text = re.sub(r"var SLIDES = \[.*?\];", f"var SLIDES = [\n{entries}\n  ];", text, count=1, flags=re.S)
-open(path, "w").write(text)
-PY
+  node -e '
+const fs = require("fs");
+const [path, ...files] = process.argv.slice(1);
+const entries = files.map((f) => `    { file: "${f}", title: "${f}" },`).join("\n");
+const text = fs.readFileSync(path, "utf8")
+  .replace(/var SLIDES = \[[\s\S]*?\];/, () => `var SLIDES = [\n${entries}\n  ];`);
+fs.writeFileSync(path, text);
+' "$deck/shared.js" "$@"
 }
 
 # Build a broken deck: scaffold + overlay one fixture slide + register it.
+# A fixture may also ship theme.css, which replaces the scaffolded theme.
 make_fixture_deck() { # <fixture-name>
   local name="$1" deck="$TMP/$1"
   bash "$ROOT/scripts/new-skeleton.sh" --type=talk "$deck" >/dev/null
   cp "$ROOT/tests/fixtures/$name"/*.html "$deck/"
+  if [[ -f "$ROOT/tests/fixtures/$name/theme.css" ]]; then
+    cp "$ROOT/tests/fixtures/$name/theme.css" "$deck/theme.css"
+  fi
   register_slides "$deck" $(cd "$ROOT/tests/fixtures/$name" && ls *.html)
   echo "$deck"
 }
@@ -68,8 +72,8 @@ else
 fi
 
 echo "== B · negative: each fixture fails exactly its own gate =="
-declare -a NAMES=(broken-static broken-tokens broken-tokens-rgba broken-visual)
-declare -a GATES=(1 2 2 4)
+declare -a NAMES=(broken-static broken-tokens broken-tokens-rgba broken-theme broken-theme-override broken-visual)
+declare -a GATES=(1 2 2 2 2 4)
 for i in "${!NAMES[@]}"; do
   name="${NAMES[$i]}"; target="${GATES[$i]}"
   deck="$(make_fixture_deck "$name")"
@@ -86,7 +90,7 @@ done
 echo "== C · playwright resolution from a plugin-cache-like location =="
 CACHE_SIM="$TMP/cache-sim"
 mkdir -p "$CACHE_SIM" "$TMP/bare-cwd"
-cp "$ROOT/scripts/audit-visual.mjs" "$CACHE_SIM/"
+cp "$ROOT/scripts/audit-visual.mjs" "$ROOT/scripts/serve.mjs" "$CACHE_SIM/"
 CLEAN_DECK="$TMP/clean-deck"
 bash "$ROOT/scripts/new-skeleton.sh" --type=talk "$CLEAN_DECK" >/dev/null
 

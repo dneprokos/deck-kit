@@ -1,38 +1,14 @@
 /* ========================================================================
-   Workshop Slides — Shared Design System
-   Design tokens, base layout, presenter mode, navigation.
+   Deck Slides — Shared Design System
+   Base layout, presenter mode, navigation.
    Import in each slide as: <link rel="stylesheet" href="shared.css">
+   Colour and font tokens live in theme.css (one of assets/themes/*.css,
+   copied in by new-skeleton.sh) — this file defines no colour of its own.
    ======================================================================== */
 
+@import url("theme.css");
+
 :root {
-  /* Every colour in the deck derives from the base tokens in this block.
-     Translucent variants are written as
-     color-mix(in srgb, var(--token) N%, transparent) — never as rgba(). */
-
-  /* Core surfaces */
-  --bg-deep: #050912;
-  --bg-panel: #0d1424;
-  --bg-elev: #162040;
-  --bg-gradient-mid: #0a1628; /* Middle stop of the animated body gradient */
-  --bg-grid: color-mix(in srgb, var(--accent-primary) 3%, transparent);
-  --surface-tint: #fff;       /* Hairline borders, hover washes, inset fills */
-  --shadow-color: #000;       /* Drop shadows, dimmed backdrops */
-
-  /* Terminal surfaces */
-  --term-bg: #080d18;
-  --term-bar-top: #10182a;
-  --term-bar-bottom: #0a1020;
-  --term-text: #dfe6f0;
-
-  /* Accents (semantic colour coding, named by role) */
-  --accent-primary:   #00e5ff; /* Concept / process */
-  --accent-human:     #2979ff; /* Human / decisions */
-  --accent-success:   #00e676; /* Positive / complete */
-  --accent-warn:      #ffab40; /* GATE / checkpoint */
-  --accent-danger:    #ff5252; /* Feedback / warning */
-  --accent-ai:        #d500f9; /* AI / agent pool */
-  --accent-highlight: #ffd740; /* Emphasis */
-
   /* Deprecated hue-named aliases — kept so decks built before the role
      rename keep rendering. Removed in the next minor release. */
   --accent-cyan:   var(--accent-primary);
@@ -43,34 +19,19 @@
   --accent-purple: var(--accent-ai);
   --accent-gold:   var(--accent-highlight);
 
-  /* Text */
-  --text-primary:   #e0e6f0;
-  --text-strong:    #fff;     /* Hero titles that need extra contrast */
-  --text-secondary: color-mix(in srgb, var(--text-primary) 72%, transparent);
-  --text-muted:     color-mix(in srgb, var(--text-primary) 45%, transparent);
-  --text-faint:     color-mix(in srgb, var(--text-primary) 25%, transparent);
+  /* Deprecated hue-named glow aliases — see accent aliases above. */
+  --glow-cyan:   var(--glow-primary);
+  --glow-amber:  var(--glow-warn);
+  --glow-green:  var(--glow-success);
+  --glow-purple: var(--glow-ai);
 
-  /* Typography */
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "SF Mono", "Fira Code", "JetBrains Mono", Menlo, monospace;
+  /* Typography (families come from the theme) */
   --base-font: 16px;
 
   /* Layout */
   --min-width: 1280px;
   --max-content: 1400px;
   --slide-padding: 32px;
-
-  /* Effects */
-  --glow-primary: 0 0 22px color-mix(in srgb, var(--accent-primary) 25%, transparent);
-  --glow-warn:    0 0 22px color-mix(in srgb, var(--accent-warn) 35%, transparent);
-  --glow-success: 0 0 22px color-mix(in srgb, var(--accent-success) 28%, transparent);
-  --glow-ai:      0 0 26px color-mix(in srgb, var(--accent-ai) 30%, transparent);
-
-  /* Deprecated hue-named glow aliases — see accent aliases above. */
-  --glow-cyan:   var(--glow-primary);
-  --glow-amber:  var(--glow-warn);
-  --glow-green:  var(--glow-success);
-  --glow-purple: var(--glow-ai);
 
   --radius-sm: 6px;
   --radius-md: 10px;

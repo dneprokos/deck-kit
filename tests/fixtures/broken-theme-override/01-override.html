@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Broken tokens — slide redefines a theme token</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  :root { --accent-primary: var(--accent-danger); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <header class="slide-header">
+    <div class="eyebrow">◆ FIXTURE · BROKEN TOKENS</div>
+    <h1 class="gradient-title">This slide overrides the theme palette</h1>
+  </header>
+  <p>Gate 1 passes (structure is fine); Gate 2 must fail on the --accent-primary override.</p>
+</div>
+<script src="shared.js" defer></script>
+</body>
+</html>

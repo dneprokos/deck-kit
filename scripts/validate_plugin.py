@@ -45,7 +45,7 @@ def load_json(rel: str):
         errors.append(f"{rel} is missing")
         return None
     try:
-        return json.loads(path.read_text())
+        return json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
         errors.append(f"{rel} is not valid JSON: {exc}")
         return None
@@ -53,7 +53,7 @@ def load_json(rel: str):
 
 def read_frontmatter(path: Path) -> dict[str, str]:
     """Top-level scalar keys of a leading --- YAML frontmatter block."""
-    text = path.read_text()
+    text = path.read_text(encoding="utf-8")
     if not text.startswith("---"):
         return {}
     end = text.find("\n---", 3)
@@ -182,7 +182,7 @@ def main() -> int:
                 continue
             if f.name == "validate_plugin.py":
                 continue  # this file names the forbidden tokens
-            for i, line in enumerate(f.read_text(errors="replace").splitlines(), 1):
+            for i, line in enumerate(f.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
                 if FORBIDDEN.search(line):
                     offenders.append(f"{f.relative_to(ROOT)}:{i}")
     check(not offenders,
@@ -196,7 +196,7 @@ def main() -> int:
     bad_calls: list[str] = []
     CALL_RE = re.compile(r"(?:bash|node|python3)\s+(?!\"?\$\{CLAUDE_PLUGIN_ROOT\})[\"']?[\w~./-]*scripts/")
     for f in sorted((ROOT / "skills").rglob("*.md")) + sorted((ROOT / "commands").glob("*.md")):
-        for i, line in enumerate(f.read_text().splitlines(), 1):
+        for i, line in enumerate(f.read_text(encoding="utf-8").splitlines(), 1):
             if CALL_RE.search(line):
                 bad_calls.append(f"{f.relative_to(ROOT)}:{i}")
     check(not bad_calls,
@@ -212,7 +212,7 @@ def main() -> int:
     for f in link_files:
         if not f.exists():
             continue
-        for m in LINK_RE.finditer(f.read_text()):
+        for m in LINK_RE.finditer(f.read_text(encoding="utf-8")):
             target = m.group(1).strip()
             if target.startswith(("http://", "https://", "#")) or "<" in target:
                 continue
@@ -230,9 +230,11 @@ def main() -> int:
     # new-skeleton.sh copies named files out of assets/; a rename on either
     # side must not drift.
     print("== asset ↔ skeleton consistency ==")
-    skeleton = (ROOT / "scripts" / "new-skeleton.sh").read_text()
+    skeleton = (ROOT / "scripts" / "new-skeleton.sh").read_text(encoding="utf-8")
     asset_files = {p.name for p in (ROOT / "assets").iterdir() if p.is_file()}
-    referenced = set(re.findall(r"\$ASSETS/([\w.-]+)", skeleton))
+    # Directory refs ($ASSETS/themes/<name>.css) are covered by the theme check.
+    referenced = {r for r in re.findall(r"\$ASSETS/([\w.-]+)", skeleton)
+                  if not (ROOT / "assets" / r).is_dir()}
     missing = sorted(referenced - asset_files)
     unused = sorted(asset_files - referenced)
     check(not missing,
@@ -242,15 +244,31 @@ def main() -> int:
           "every file in assets/ is copied by new-skeleton.sh",
           f"assets/ files never copied by new-skeleton.sh: {unused}")
 
+    # --- theme completeness ---
+    # assets/themes/cyberpunk.css is the reference token set; every shipped
+    # theme must define all of it (Gate 2 enforces the same on decks).
+    print("== themes ==")
+    themes_dir = ROOT / "assets" / "themes"
+    token_re = re.compile(r"^\s*(--[a-z0-9-]+)\s*:", re.M)
+    reference = themes_dir / "cyberpunk.css"
+    check(reference.is_file(), "reference theme assets/themes/cyberpunk.css exists",
+          "assets/themes/cyberpunk.css missing")
+    if reference.is_file():
+        required = set(token_re.findall(reference.read_text(encoding="utf-8")))
+        for theme in sorted(themes_dir.glob("*.css")):
+            gaps = sorted(required - set(token_re.findall(theme.read_text(encoding="utf-8"))))
+            check(not gaps, f"theme {theme.stem} defines all {len(required)} tokens",
+                  f"theme {theme.stem} missing tokens: {gaps}")
+
     # --- archetype catalog ↔ blueprint coverage ---
     # Every archetype in the plan-side catalog must have a build-side
     # blueprint heading, and vice versa. Names are the deck-spec contract.
     print("== archetype coverage ==")
-    catalog_text = (ROOT / "skills" / "deck-plan" / "references" / "archetype-catalog.md").read_text()
+    catalog_text = (ROOT / "skills" / "deck-plan" / "references" / "archetype-catalog.md").read_text(encoding="utf-8")
     catalog = set(re.findall(r"^\| `([a-z0-9-]+)` \|", catalog_text, re.M))
     blueprint_names: set[str] = set()
     for rel in ("archetypes.md", "archetypes-lecture.md", "archetypes-talk.md"):
-        text = (ROOT / "skills" / "deck-build" / "references" / rel).read_text()
+        text = (ROOT / "skills" / "deck-build" / "references" / rel).read_text(encoding="utf-8")
         blueprint_names |= set(re.findall(r"^## (?:\d+ · |Workshop-specific · )([a-z0-9-]+)", text, re.M))
     check(catalog == blueprint_names,
           f"archetype catalog matches blueprints exactly ({len(catalog)} archetypes)",
@@ -261,7 +279,7 @@ def main() -> int:
     print("== _shared no-orphan ==")
     doc_pool = sorted((ROOT / "skills").rglob("*.md"))
     for sf in sorted((ROOT / "skills" / "_shared").glob("*.md")):
-        referrers = [p for p in doc_pool if p != sf and sf.name in p.read_text()]
+        referrers = [p for p in doc_pool if p != sf and sf.name in p.read_text(encoding="utf-8")]
         check(bool(referrers),
               f"_shared/{sf.name} is referenced by {len(referrers)} file(s)",
               f"_shared/{sf.name} is an orphan — nothing under skills/ points to it")
@@ -271,7 +289,7 @@ def main() -> int:
     SPEC_LINE = re.compile(r"^\d{2}\. [a-z][a-z0-9-]* · [^·]+ · [^·]+ · [^·]+$")
     fixture_spec = ROOT / "skills" / "deck-build" / "evals" / "files" / "fixture-spec" / ".planning" / "deck-spec.md"
     if check(fixture_spec.exists(), "deck-build fixture spec exists", f"{fixture_spec.relative_to(ROOT)} is missing"):
-        plan_lines = [l for l in fixture_spec.read_text().splitlines() if re.match(r"^\d{2}\.", l)]
+        plan_lines = [l for l in fixture_spec.read_text(encoding="utf-8").splitlines() if re.match(r"^\d{2}\.", l)]
         bad = [l for l in plan_lines if not SPEC_LINE.match(l)]
         check(plan_lines and not bad,
               f"fixture spec has {len(plan_lines)} valid slide-plan lines",
@@ -290,4 +308,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    # Windows consoles default to a legacy code page; force UTF-8 output so
+    # the check marks and arrows in messages don't raise UnicodeEncodeError.
+    sys.stdout.reconfigure(encoding="utf-8")
     sys.exit(main())
