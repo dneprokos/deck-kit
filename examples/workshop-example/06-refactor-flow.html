@@ -32,7 +32,7 @@
     font-size: 2.6rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green), var(--accent-blue));
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-success), var(--accent-human));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -55,18 +55,18 @@
     gap: 20px;
     align-items: center;
     background: var(--bg-panel);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid color-mix(in srgb, var(--surface-tint) 7%, transparent);
     border-left: 4px solid var(--node-accent);
     border-radius: var(--radius-lg);
     padding: 18px 26px;
     animation: fade-in-up 0.5s ease both;
   }
 
-  .flow-node.node-red   { --node-accent: var(--accent-red); }
-  .flow-node.node-cyan  { --node-accent: var(--accent-cyan); }
-  .flow-node.node-blue  { --node-accent: var(--accent-blue); }
-  .flow-node.node-amber { --node-accent: var(--accent-amber); box-shadow: var(--glow-amber); border-color: rgba(255, 171, 64, 0.4); }
-  .flow-node.node-green { --node-accent: var(--accent-green); box-shadow: var(--glow-green); border-color: rgba(0, 230, 118, 0.4); }
+  .flow-node.node-red   { --node-accent: var(--accent-danger); }
+  .flow-node.node-cyan  { --node-accent: var(--accent-primary); }
+  .flow-node.node-blue  { --node-accent: var(--accent-human); }
+  .flow-node.node-amber { --node-accent: var(--accent-warn); box-shadow: var(--glow-warn); border-color: color-mix(in srgb, var(--accent-warn) 40%, transparent); }
+  .flow-node.node-green { --node-accent: var(--accent-success); box-shadow: var(--glow-success); border-color: color-mix(in srgb, var(--accent-success) 40%, transparent); }
 
   .node-icon {
     font-size: 2rem;
@@ -75,7 +75,7 @@
   }
 
   .flow-node.node-amber .node-icon {
-    color: var(--accent-amber);
+    color: var(--accent-warn);
     font-family: Georgia, serif;
     animation: breathe 2.6s ease-in-out infinite;
   }
@@ -117,7 +117,7 @@
 
   .flow-conn .arrow {
     font-size: 1.2rem;
-    color: var(--accent-cyan);
+    color: var(--accent-primary);
     line-height: 1;
   }
 
@@ -132,8 +132,8 @@
   .loop-card {
     padding: 16px 20px;
     border-radius: var(--radius-md);
-    background: rgba(13, 20, 36, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: color-mix(in srgb, var(--bg-panel) 60%, transparent);
+    border: 1px solid color-mix(in srgb, var(--surface-tint) 8%, transparent);
     font-size: 0.95rem;
     line-height: 1.45;
     color: var(--text-secondary);
@@ -148,10 +148,10 @@
     margin-bottom: 6px;
   }
 
-  .loop-card.ok    { border-color: rgba(0, 230, 118, 0.3); }
-  .loop-card.ok .k    { color: var(--accent-green); }
-  .loop-card.back  { border-color: rgba(255, 82, 82, 0.3); }
-  .loop-card.back .k  { color: var(--accent-red); }
+  .loop-card.ok    { border-color: color-mix(in srgb, var(--accent-success) 30%, transparent); }
+  .loop-card.ok .k    { color: var(--accent-success); }
+  .loop-card.back  { border-color: color-mix(in srgb, var(--accent-danger) 30%, transparent); }
+  .loop-card.back .k  { color: var(--accent-danger); }
 
   .loop-card strong { color: var(--text-primary); font-weight: 600; }
 

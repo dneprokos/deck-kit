@@ -53,7 +53,7 @@ For more than 9 siblings, add per-index `animation-delay` rules inline.
 - Phase slide: no entrance animation — they render instantly (presenter is
   already mid-talk when they arrive)
 - Terminal demo: terminal body has no entrance; terminal itself can pulse
-  via `var(--glow-cyan)` shadow
+  via `var(--glow-primary)` shadow
 - Quote: lines drop in 0.3s apart for emphasis
 
 Pick the rhythm that matches the narrative energy. Fast decks feel frantic;

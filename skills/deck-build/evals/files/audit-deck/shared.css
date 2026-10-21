@@ -5,26 +5,50 @@
    ======================================================================== */
 
 :root {
+  /* Every colour in the deck derives from the base tokens in this block.
+     Translucent variants are written as
+     color-mix(in srgb, var(--token) N%, transparent) — never as rgba(). */
+
   /* Core surfaces */
   --bg-deep: #050912;
   --bg-panel: #0d1424;
   --bg-elev: #162040;
-  --bg-grid: rgba(0, 229, 255, 0.03);
+  --bg-gradient-mid: #0a1628; /* Middle stop of the animated body gradient */
+  --bg-grid: color-mix(in srgb, var(--accent-primary) 3%, transparent);
+  --surface-tint: #fff;       /* Hairline borders, hover washes, inset fills */
+  --shadow-color: #000;       /* Drop shadows, dimmed backdrops */
 
-  /* Accents (semantic colour coding) */
-  --accent-cyan:   #00e5ff; /* Concept / process */
-  --accent-blue:   #2979ff; /* Human / decisions */
-  --accent-green:  #00e676; /* Positive / complete */
-  --accent-amber:  #ffab40; /* GATE / checkpoint */
-  --accent-red:    #ff5252; /* Feedback / warning */
-  --accent-purple: #d500f9; /* AI / agent pool */
-  --accent-gold:   #ffd740; /* Emphasis */
+  /* Terminal surfaces */
+  --term-bg: #080d18;
+  --term-bar-top: #10182a;
+  --term-bar-bottom: #0a1020;
+  --term-text: #dfe6f0;
+
+  /* Accents (semantic colour coding, named by role) */
+  --accent-primary:   #00e5ff; /* Concept / process */
+  --accent-human:     #2979ff; /* Human / decisions */
+  --accent-success:   #00e676; /* Positive / complete */
+  --accent-warn:      #ffab40; /* GATE / checkpoint */
+  --accent-danger:    #ff5252; /* Feedback / warning */
+  --accent-ai:        #d500f9; /* AI / agent pool */
+  --accent-highlight: #ffd740; /* Emphasis */
+
+  /* Deprecated hue-named aliases — kept so decks built before the role
+     rename keep rendering. Removed in the next minor release. */
+  --accent-cyan:   var(--accent-primary);
+  --accent-blue:   var(--accent-human);
+  --accent-green:  var(--accent-success);
+  --accent-amber:  var(--accent-warn);
+  --accent-red:    var(--accent-danger);
+  --accent-purple: var(--accent-ai);
+  --accent-gold:   var(--accent-highlight);
 
   /* Text */
   --text-primary:   #e0e6f0;
-  --text-secondary: rgba(224, 230, 240, 0.72);
-  --text-muted:     rgba(224, 230, 240, 0.45);
-  --text-faint:     rgba(224, 230, 240, 0.25);
+  --text-strong:    #fff;     /* Hero titles that need extra contrast */
+  --text-secondary: color-mix(in srgb, var(--text-primary) 72%, transparent);
+  --text-muted:     color-mix(in srgb, var(--text-primary) 45%, transparent);
+  --text-faint:     color-mix(in srgb, var(--text-primary) 25%, transparent);
 
   /* Typography */
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -37,10 +61,16 @@
   --slide-padding: 32px;
 
   /* Effects */
-  --glow-cyan:   0 0 22px rgba(0, 229, 255, 0.25);
-  --glow-amber:  0 0 22px rgba(255, 171, 64, 0.35);
-  --glow-green:  0 0 22px rgba(0, 230, 118, 0.28);
-  --glow-purple: 0 0 26px rgba(213, 0, 249, 0.30);
+  --glow-primary: 0 0 22px color-mix(in srgb, var(--accent-primary) 25%, transparent);
+  --glow-warn:    0 0 22px color-mix(in srgb, var(--accent-warn) 35%, transparent);
+  --glow-success: 0 0 22px color-mix(in srgb, var(--accent-success) 28%, transparent);
+  --glow-ai:      0 0 26px color-mix(in srgb, var(--accent-ai) 30%, transparent);
+
+  /* Deprecated hue-named glow aliases — see accent aliases above. */
+  --glow-cyan:   var(--glow-primary);
+  --glow-amber:  var(--glow-warn);
+  --glow-green:  var(--glow-success);
+  --glow-purple: var(--glow-ai);
 
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -73,7 +103,7 @@ body {
   display: flex;
   flex-direction: column;
   background:
-    linear-gradient(135deg, #050912 0%, #0a1628 50%, #050912 100%);
+    linear-gradient(135deg, var(--bg-deep) 0%, var(--bg-gradient-mid) 50%, var(--bg-deep) 100%);
   background-size: 400% 400%;
   animation: bg-shift 28s ease infinite;
   position: relative;
@@ -119,7 +149,7 @@ body::before {
   align-items: baseline;
   margin-bottom: 24px;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid color-mix(in srgb, var(--surface-tint) 5%, transparent);
 }
 
 .slide-header .eyebrow {
@@ -134,7 +164,7 @@ body::before {
   font-size: 2.2rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-human), var(--accent-ai));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -154,7 +184,7 @@ body::before {
 
 .panel {
   background: var(--bg-panel);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid color-mix(in srgb, var(--surface-tint) 6%, transparent);
   border-radius: var(--radius-lg);
   padding: 22px 26px;
   position: relative;
@@ -167,7 +197,7 @@ body::before {
   inset: 0;
   border-radius: var(--radius-lg);
   padding: 1px;
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.18) 0%, transparent 40%, transparent 60%, rgba(41, 121, 255, 0.12) 100%);
+  background: linear-gradient(135deg in srgb, color-mix(in srgb, var(--accent-primary) 18%, transparent) 0%, transparent 40%, transparent 60%, color-mix(in srgb, var(--accent-human) 12%, transparent) 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
@@ -184,7 +214,7 @@ body::before {
 .panel-title {
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
   margin-bottom: 10px;
   font-family: var(--font-mono);
   letter-spacing: 1px;
@@ -207,12 +237,12 @@ body::before {
   text-transform: uppercase;
 }
 
-.badge-cyan   { background: rgba(0, 229, 255, 0.12); color: var(--accent-cyan); border: 1px solid rgba(0, 229, 255, 0.4); }
-.badge-green  { background: rgba(0, 230, 118, 0.12); color: var(--accent-green); border: 1px solid rgba(0, 230, 118, 0.4); }
-.badge-amber  { background: rgba(255, 171, 64, 0.14); color: var(--accent-amber); border: 1px solid rgba(255, 171, 64, 0.5); }
-.badge-red    { background: rgba(255, 82, 82, 0.14); color: var(--accent-red); border: 1px solid rgba(255, 82, 82, 0.45); }
-.badge-purple { background: rgba(213, 0, 249, 0.14); color: var(--accent-purple); border: 1px solid rgba(213, 0, 249, 0.45); }
-.badge-blue   { background: rgba(41, 121, 255, 0.14); color: var(--accent-blue); border: 1px solid rgba(41, 121, 255, 0.4); }
+.badge-cyan   { background: color-mix(in srgb, var(--accent-primary) 12%, transparent); color: var(--accent-primary); border: 1px solid color-mix(in srgb, var(--accent-primary) 40%, transparent); }
+.badge-green  { background: color-mix(in srgb, var(--accent-success) 12%, transparent); color: var(--accent-success); border: 1px solid color-mix(in srgb, var(--accent-success) 40%, transparent); }
+.badge-amber  { background: color-mix(in srgb, var(--accent-warn) 14%, transparent); color: var(--accent-warn); border: 1px solid color-mix(in srgb, var(--accent-warn) 50%, transparent); }
+.badge-red    { background: color-mix(in srgb, var(--accent-danger) 14%, transparent); color: var(--accent-danger); border: 1px solid color-mix(in srgb, var(--accent-danger) 45%, transparent); }
+.badge-purple { background: color-mix(in srgb, var(--accent-ai) 14%, transparent); color: var(--accent-ai); border: 1px solid color-mix(in srgb, var(--accent-ai) 45%, transparent); }
+.badge-blue   { background: color-mix(in srgb, var(--accent-human) 14%, transparent); color: var(--accent-human); border: 1px solid color-mix(in srgb, var(--accent-human) 40%, transparent); }
 
 /* ========================================================================
    Code / Terminal
@@ -223,13 +253,13 @@ code, pre, .mono {
 }
 
 .code-inline {
-  background: rgba(0, 229, 255, 0.08);
-  color: var(--accent-cyan);
+  background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+  color: var(--accent-primary);
   padding: 2px 8px;
   border-radius: 4px;
   font-family: var(--font-mono);
   font-size: 0.88em;
-  border: 1px solid rgba(0, 229, 255, 0.18);
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 18%, transparent);
 }
 
 /* ========================================================================
@@ -258,8 +288,8 @@ body.presenter .slide-subtitle {
   bottom: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
-  box-shadow: 0 0 10px rgba(0, 229, 255, 0.6);
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-ai));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent-primary) 60%, transparent);
   z-index: 1000;
   transition: width 0.3s ease;
 }
@@ -292,8 +322,8 @@ body.presenter .progress-label {
   transform: translateY(-50%);
   width: 44px;
   height: 72px;
-  background: rgba(13, 20, 36, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--bg-panel) 75%, transparent);
+  border: 1px solid color-mix(in srgb, var(--surface-tint) 8%, transparent);
   border-radius: var(--radius-md);
   color: var(--text-muted);
   font-family: var(--font-mono);
@@ -309,8 +339,8 @@ body.presenter .progress-label {
 
 .nav-btn:hover {
   opacity: 1;
-  color: var(--accent-cyan);
-  border-color: rgba(0, 229, 255, 0.5);
+  color: var(--accent-primary);
+  border-color: color-mix(in srgb, var(--accent-primary) 50%, transparent);
 }
 
 .nav-btn.nav-prev { left: 12px; }
@@ -328,8 +358,8 @@ body.presenter .progress-label {
   top: 12px;
   right: 12px;
   padding: 6px 14px;
-  background: rgba(13, 20, 36, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--bg-panel) 85%, transparent);
+  border: 1px solid color-mix(in srgb, var(--surface-tint) 8%, transparent);
   border-radius: var(--radius-md);
   color: var(--text-muted);
   font-family: var(--font-mono);
@@ -344,8 +374,8 @@ body.presenter .progress-label {
 
 .nav-index:hover {
   opacity: 1;
-  color: var(--accent-cyan);
-  border-color: rgba(0, 229, 255, 0.5);
+  color: var(--accent-primary);
+  border-color: color-mix(in srgb, var(--accent-primary) 50%, transparent);
 }
 
 /* ========================================================================
@@ -362,8 +392,8 @@ body.presenter .progress-label {
 }
 
 @keyframes gate-flash {
-  0%, 100% { fill: var(--accent-amber); opacity: 0.85; }
-  50%      { fill: var(--accent-green); opacity: 1;    }
+  0%, 100% { fill: var(--accent-warn); opacity: 0.85; }
+  50%      { fill: var(--accent-success); opacity: 1;    }
 }
 
 @keyframes fade-in-up {
@@ -401,13 +431,13 @@ body.presenter .progress-label {
    ======================================================================== */
 
 .terminal {
-  background: #080d18;
-  border: 1px solid rgba(0, 229, 255, 0.22);
+  background: var(--term-bg);
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 22%, transparent);
   border-radius: var(--radius-lg);
   font-family: var(--font-mono);
-  color: #dfe6f0;
+  color: var(--term-text);
   overflow: hidden;
-  box-shadow: var(--glow-cyan);
+  box-shadow: var(--glow-primary);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -418,8 +448,8 @@ body.presenter .progress-label {
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
-  background: linear-gradient(180deg, #10182a, #0a1020);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(180deg, var(--term-bar-top), var(--term-bar-bottom));
+  border-bottom: 1px solid color-mix(in srgb, var(--surface-tint) 6%, transparent);
   flex-shrink: 0;
 }
 
@@ -449,11 +479,11 @@ body.presenter .progress-label {
 }
 
 .terminal-prompt {
-  color: var(--accent-green);
+  color: var(--accent-success);
 }
 
 .terminal-command {
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
 }
 
 .terminal-muted {
@@ -461,19 +491,19 @@ body.presenter .progress-label {
 }
 
 .terminal-ok {
-  color: var(--accent-green);
+  color: var(--accent-success);
 }
 
 .terminal-warn {
-  color: var(--accent-amber);
+  color: var(--accent-warn);
 }
 
 .terminal-err {
-  color: var(--accent-red);
+  color: var(--accent-danger);
 }
 
 .terminal-label {
-  color: var(--accent-amber);
+  color: var(--accent-warn);
 }
 
 .terminal-cursor {
@@ -481,7 +511,7 @@ body.presenter .progress-label {
   width: 10px;
   height: 1.1em;
   vertical-align: -2px;
-  background: var(--accent-cyan);
+  background: var(--accent-primary);
   animation: typewriter-blink 1s step-end infinite;
   margin-left: 2px;
 }
@@ -494,30 +524,30 @@ body.presenter .progress-label {
   align-items: center;
   justify-content: center;
   gap: 14px;
-  background: rgba(8, 13, 24, 0.82);
+  background: color-mix(in srgb, var(--term-bg) 82%, transparent);
   backdrop-filter: blur(3px);
   z-index: 10;
 }
 
 .run-btn {
   padding: 18px 44px;
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(213, 0, 249, 0.18));
-  border: 1px solid var(--accent-cyan);
+  background: linear-gradient(135deg in srgb, color-mix(in srgb, var(--accent-primary) 15%, transparent), color-mix(in srgb, var(--accent-ai) 18%, transparent));
+  border: 1px solid var(--accent-primary);
   border-radius: 100px;
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
   font-family: var(--font-mono);
   font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: 3px;
   cursor: pointer;
   text-transform: uppercase;
-  box-shadow: var(--glow-cyan);
+  box-shadow: var(--glow-primary);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .run-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 40px rgba(0, 229, 255, 0.5);
+  box-shadow: 0 0 40px color-mix(in srgb, var(--accent-primary) 50%, transparent);
 }
 
 .run-hint {
@@ -532,8 +562,8 @@ body.presenter .progress-label {
   top: 10px;
   right: 14px;
   padding: 5px 12px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--shadow-color) 40%, transparent);
+  border: 1px solid color-mix(in srgb, var(--surface-tint) 8%, transparent);
   border-radius: var(--radius-sm);
   color: var(--text-muted);
   font-family: var(--font-mono);
@@ -546,13 +576,13 @@ body.presenter .progress-label {
 }
 
 .reset-btn.visible { opacity: 0.75; }
-.reset-btn:hover { opacity: 1; color: var(--accent-cyan); }
+.reset-btn:hover { opacity: 1; color: var(--accent-primary); }
 
 .progress-inline {
   display: inline-block;
   width: 160px;
   height: 6px;
-  background: rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--surface-tint) 8%, transparent);
   border-radius: 3px;
   vertical-align: middle;
   margin: 0 6px;
@@ -563,7 +593,7 @@ body.presenter .progress-label {
   display: block;
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-success));
   transition: width 0.2s linear;
 }
 
@@ -582,22 +612,22 @@ body.presenter .progress-label {
 .data-table td {
   padding: 10px 14px;
   text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid color-mix(in srgb, var(--surface-tint) 6%, transparent);
   vertical-align: top;
 }
 
 .data-table thead th {
-  background: rgba(0, 229, 255, 0.05);
-  color: var(--accent-cyan);
+  background: color-mix(in srgb, var(--accent-primary) 5%, transparent);
+  color: var(--accent-primary);
   font-family: var(--font-mono);
   font-size: 0.78rem;
   letter-spacing: 1px;
   text-transform: uppercase;
-  border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent-primary) 20%, transparent);
 }
 
 .data-table tbody tr:hover {
-  background: rgba(0, 229, 255, 0.03);
+  background: color-mix(in srgb, var(--accent-primary) 3%, transparent);
 }
 
 /* ========================================================================

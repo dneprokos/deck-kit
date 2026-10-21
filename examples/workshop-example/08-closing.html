@@ -21,9 +21,9 @@
     width: 820px;
     height: 460px;
     background: radial-gradient(
-      ellipse at center,
-      rgba(0, 230, 118, 0.06) 0%,
-      rgba(0, 229, 255, 0.05) 50%,
+      ellipse at center in srgb,
+      color-mix(in srgb, var(--accent-success) 6%, transparent) 0%,
+      color-mix(in srgb, var(--accent-primary) 5%, transparent) 50%,
       transparent 76%
     );
     pointer-events: none;
@@ -53,7 +53,7 @@
     font-weight: 900;
     letter-spacing: -0.03em;
     line-height: 1.05;
-    background: linear-gradient(120deg, var(--accent-cyan), var(--accent-green), var(--accent-blue));
+    background: linear-gradient(120deg, var(--accent-primary), var(--accent-success), var(--accent-human));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -70,16 +70,16 @@
 
   .takeaway {
     background: var(--bg-panel);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid color-mix(in srgb, var(--surface-tint) 7%, transparent);
     border-top: 3px solid var(--t-accent);
     border-radius: var(--radius-lg);
     padding: 24px 22px;
     animation: fade-in-up 0.6s ease both;
   }
 
-  .takeaway.t1 { --t-accent: var(--accent-cyan); }
-  .takeaway.t2 { --t-accent: var(--accent-blue); }
-  .takeaway.t3 { --t-accent: var(--accent-amber); }
+  .takeaway.t1 { --t-accent: var(--accent-primary); }
+  .takeaway.t2 { --t-accent: var(--accent-human); }
+  .takeaway.t3 { --t-accent: var(--accent-warn); }
 
   .takeaway:nth-child(1) { animation-delay: 0.2s; }
   .takeaway:nth-child(2) { animation-delay: 0.35s; }
@@ -115,10 +115,10 @@
     align-items: center;
     gap: 12px;
     padding: 26px 44px;
-    border: 1px solid var(--accent-green);
+    border: 1px solid var(--accent-success);
     border-radius: var(--radius-lg);
-    background: rgba(0, 230, 118, 0.05);
-    box-shadow: var(--glow-green);
+    background: color-mix(in srgb, var(--accent-success) 5%, transparent);
+    box-shadow: var(--glow-success);
     animation: fade-in-up 0.8s ease 0.65s both;
   }
 
@@ -127,7 +127,7 @@
     font-size: 0.78rem;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--accent-green);
+    color: var(--accent-success);
   }
 
   .cta-verb {
@@ -160,7 +160,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
+    background: color-mix(in srgb, var(--surface-tint) 15%, transparent);
   }
 
   .contact-line .name { color: var(--text-secondary); }

@@ -21,13 +21,13 @@
   align-items: center;
   margin-bottom: 22px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid color-mix(in srgb, var(--surface-tint) 6%, transparent);
 }
 
 .demo-num-block {
   padding: 10px 22px;
-  background: rgba(0, 229, 255, 0.06);
-  border: 1px solid rgba(0, 229, 255, 0.35);
+  background: color-mix(in srgb, var(--accent-primary) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 35%, transparent);
   border-radius: var(--radius-lg);
   display: flex;
   align-items: baseline;
@@ -40,7 +40,7 @@
   font-size: 2.4rem;
   font-weight: 800;
   line-height: 1;
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
   letter-spacing: -0.02em;
 }
 
@@ -56,7 +56,7 @@
   font-size: 0.75rem;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
   opacity: 0.75;
 }
 
@@ -66,7 +66,7 @@
   letter-spacing: -0.02em;
   line-height: 1.1;
   margin-top: 4px;
-  color: #fff;
+  color: var(--text-strong);
 }
 
 .demo-title-block .tagline {
@@ -99,19 +99,19 @@
 
 .ctx-card {
   background: var(--bg-panel);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid color-mix(in srgb, var(--surface-tint) 7%, transparent);
   border-radius: var(--radius-lg);
   padding: 16px 20px;
 }
 
-.ctx-card.accent { border-color: var(--accent-cyan); box-shadow: var(--glow-cyan); }
+.ctx-card.accent { border-color: var(--accent-primary); box-shadow: var(--glow-primary); }
 
 .ctx-card .label {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
   margin-bottom: 8px;
 }
 
@@ -133,7 +133,7 @@
 .ctx-card code {
   font-family: var(--font-mono);
   font-size: 0.88rem;
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
 }
 
 .ctx-card .phase-chip {
@@ -141,12 +141,12 @@
   align-items: center;
   gap: 6px;
   padding: 4px 12px;
-  background: rgba(0, 229, 255, 0.08);
-  border: 1px solid rgba(0, 229, 255, 0.25);
+  background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 25%, transparent);
   border-radius: 100px;
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
   letter-spacing: 1px;
   text-transform: uppercase;
 }
@@ -169,14 +169,14 @@
   content: "▸";
   position: absolute;
   left: 0;
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
   font-family: var(--font-mono);
 }
 
 .ctx-card .key-quote {
   padding: 10px 14px;
-  border-left: 3px solid var(--accent-cyan);
-  background: rgba(0, 229, 255, 0.04);
+  border-left: 3px solid var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 4%, transparent);
   font-style: italic;
   font-size: 0.88rem;
   color: var(--text-secondary);

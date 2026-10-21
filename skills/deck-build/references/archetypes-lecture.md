@@ -55,8 +55,8 @@ after 400ms each). Each bullet has a small cyan check icon and a brief
 ```css
 .objectives-list { list-style: none; padding: 0; margin-top: 40px; }
 .objective { display: flex; gap: 18px; padding: 16px 20px;
-  border-left: 2px solid var(--accent-cyan);
-  background: rgba(0, 229, 255, 0.04);
+  border-left: 2px solid var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 4%, transparent);
   margin-bottom: 14px; border-radius: var(--radius-sm);
   opacity: 0; animation: fade-in-up 0.6s ease forwards; }
 .objective:nth-child(1) { animation-delay: 0.1s; }
@@ -64,7 +64,7 @@ after 400ms each). Each bullet has a small cyan check icon and a brief
 .objective:nth-child(3) { animation-delay: 0.5s; }
 .objective:nth-child(4) { animation-delay: 0.7s; }
 .objective:nth-child(5) { animation-delay: 0.9s; }
-.objective-icon { color: var(--accent-cyan); font-weight: bold;
+.objective-icon { color: var(--accent-primary); font-weight: bold;
   font-family: var(--font-mono); }
 .objective-text { font-size: 1.35rem; line-height: 1.4; }
 ```
@@ -111,7 +111,7 @@ one-line summary.
 ```css
 .chapter-num-bg { position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%); font-size: 32rem;
-  font-weight: 900; color: rgba(0, 229, 255, 0.04);
+  font-weight: 900; color: color-mix(in srgb, var(--accent-primary) 4%, transparent);
   z-index: 0; font-family: var(--font-mono); line-height: 1; }
 .chapter-content { position: relative; z-index: 1; text-align: center;
   max-width: 1200px; }
@@ -168,9 +168,9 @@ chapter.
   minmax(280px, 1fr)); gap: 20px; margin-top: 36px; }
 .recap-card { padding: 28px 24px; border-radius: var(--radius-md);
   background: var(--bg-panel);
-  border: 1px solid rgba(0, 229, 255, 0.2);
-  box-shadow: var(--glow-cyan); }
-.recap-num { font-family: var(--font-mono); color: var(--accent-cyan);
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 20%, transparent);
+  box-shadow: var(--glow-primary); }
+.recap-num { font-family: var(--font-mono); color: var(--accent-primary);
   font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 14px; }
 .recap-title { font-size: 1.25rem; font-weight: 700;
   margin-bottom: 10px; }
@@ -235,17 +235,17 @@ citation. Hover reveals URL if different from display text.
   font-size: 0.75rem; letter-spacing: 3px; color: var(--text-muted);
   padding: 8px 16px; text-transform: uppercase; }
 .references-table td { padding: 14px 16px;
-  background: rgba(13, 20, 36, 0.5);
-  border-top: 1px solid rgba(0, 229, 255, 0.1);
-  border-bottom: 1px solid rgba(0, 229, 255, 0.1); }
+  background: color-mix(in srgb, var(--bg-panel) 50%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--accent-primary) 10%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent-primary) 10%, transparent); }
 .references-table td:first-child { border-left: 2px solid
-  var(--accent-cyan); border-radius: var(--radius-sm) 0 0
+  var(--accent-primary); border-radius: var(--radius-sm) 0 0
   var(--radius-sm); width: 60px; }
 .references-table td:last-child { border-radius: 0
   var(--radius-sm) var(--radius-sm) 0; }
-.ref-num { font-family: var(--font-mono); color: var(--accent-cyan);
+.ref-num { font-family: var(--font-mono); color: var(--accent-primary);
   font-size: 1rem; }
-.references-table a { color: var(--accent-blue); }
+.references-table a { color: var(--accent-human); }
 ```
 
 **Source mapping:** typically compiled from the source material's

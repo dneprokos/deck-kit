@@ -17,14 +17,13 @@ cd "$DECK"
 fail_count=0
 fail() { echo "✗ $1"; fail_count=$((fail_count + 1)); }
 
-# Allow-list of palette-member hexes that are OK in inline SVG fill/stroke
-# and in titlebar traffic-light dots.
+# Allow-list of hex literals permitted in slide HTML.
 #
-# - Core palette: bg-deep, bg-panel, terminal surfaces, all 7 accents, text.
-# - Terminal dots: macOS traffic-light convention.
-# - Muted variants: slightly darker shades used as gradient second-stops
-#   and SVG muted-text fills (documented in design-tokens.md).
-ALLOWED='#050912|#0d1424|#080d18|#10182a|#0a1020|#162040|#00e5ff|#2979ff|#00e676|#ffab40|#ff5252|#d500f9|#ffd740|#e0e6f0|#dfe6f0|#fff|#ff5f56|#ffbd2e|#27c93f|#cfd4dc|#8899bb|#34e684|#5a95ff|#c75bff'
+# Every palette colour is a token in shared.css :root, so slides (inline SVG
+# included — use style="fill: var(--token)") reference var(--...) only.
+# The one exception is the macOS traffic-light dots on terminal titlebars:
+# a fixed convention, not part of any theme.
+ALLOWED='#ff5f56|#ffbd2e|#27c93f'
 
 # ----- 1. Hardcoded hex colours outside allow-list -----
 for f in *.html; do
@@ -38,7 +37,22 @@ for f in *.html; do
     | sort -u || true)
   if [[ -n "$offending" ]]; then
     while IFS= read -r hex; do
-      fail "$f: unregistered hex $hex (add to :root in shared.css or allow-list)"
+      fail "$f: hardcoded hex $hex (use var(--token); add a token to :root in shared.css if none fits)"
+    done <<< "$offending"
+  fi
+done
+
+# ----- 1b. Raw colour functions -----
+# Translucent palette colours are written as
+# color-mix(in srgb, var(--token) N%, transparent), so a theme swap reaches
+# them. rgb()/rgba()/hsl()/hsla() literals bypass the tokens.
+for f in *.html; do
+  [[ -e "$f" ]] || continue
+  # Require a digit inside the parens so prose like "rgba()" is not flagged.
+  offending=$(grep -noE '\b(rgba?|hsla?)\([^)]*[0-9][^)]*\)' "$f" || true)
+  if [[ -n "$offending" ]]; then
+    while IFS= read -r hit; do
+      fail "$f: raw colour function → $hit (use color-mix(in srgb, var(--token) N%, transparent))"
     done <<< "$offending"
   fi
 done

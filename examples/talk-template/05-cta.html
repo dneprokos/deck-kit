@@ -23,7 +23,7 @@
 
   .cta-eyebrow {
     font-family: var(--font-mono);
-    color: var(--accent-amber);
+    color: var(--accent-warn);
     font-size: 0.85rem;
     letter-spacing: 4px;
     margin-bottom: 28px;
@@ -45,16 +45,16 @@
     font-family: var(--font-mono);
     font-size: 1.55rem;
     padding: 18px 32px;
-    border: 1px solid var(--accent-amber);
+    border: 1px solid var(--accent-warn);
     border-radius: var(--radius-md);
     display: inline-block;
-    background: rgba(255, 171, 64, 0.04);
-    box-shadow: var(--glow-amber);
+    background: color-mix(in srgb, var(--accent-warn) 4%, transparent);
+    box-shadow: var(--glow-warn);
     animation: fade-in-up 0.8s ease 0.3s both;
   }
 
   .cta-link {
-    color: var(--accent-amber);
+    color: var(--accent-warn);
     text-decoration: none;
     transition: color 0.2s ease;
   }

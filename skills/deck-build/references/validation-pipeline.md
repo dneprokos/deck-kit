@@ -43,20 +43,18 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/audit-tokens.sh" <deck-dir>
 
 **What it checks:**
 1. No hardcoded hex colours (e.g. `#ff0000`, `#abc`) anywhere in `.html`
-   files outside the allow-list:
-   - Palette-member hexes used in inline SVG `fill=` / `stroke=` attrs.
-   - Terminal titlebar dots (`#ff5f56`, `#ffbd2e`, `#27c93f`) — only on
-     elements with class `dot r|y|g`.
-   - `#fff` — only on hero titles that explicitly need it (cover, closing).
-   - `#050912`, `#0d1424`, `#080d18`, `#10182a`, `#0a1020` — the deep
-     gradient stops / terminal body colours.
-2. No `font-family:` outside `:root` (inside `<style>` blocks should use
+   files, inline SVG included. The only allowed literals are the terminal
+   titlebar dots (`#ff5f56`, `#ffbd2e`, `#27c93f`), a fixed convention.
+2. No `rgb()`, `rgba()`, `hsl()` or `hsla()` with numeric arguments —
+   translucent colours are `color-mix(in srgb, var(--token) N%, transparent)`.
+3. No `font-family:` outside `:root` (inside `<style>` blocks should use
    `var(--font-sans)` or `var(--font-mono)` only).
-3. No `!important` in slide-level `<style>` blocks (framework styles own
+4. No `!important` in slide-level `<style>` blocks (framework styles own
    specificity; slide overrides should be naturally more specific).
 
-Inspecting the allow-list is the auditor's job; extending it is a
-deliberate decision tied to updating `design-tokens.md`.
+Checks 1–2 keep every colour on a `:root` token, so swapping the palette in
+`shared.css` re-themes the deck. A colour no token covers is a new token in
+`:root` (see `design-tokens.md`), never a literal on the slide.
 
 ## Gate 3 — HTTP smoke (runtime reachability)
 
