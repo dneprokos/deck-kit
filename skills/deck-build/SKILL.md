@@ -56,8 +56,12 @@ to the affected slides only.
    explicit request. In spec mode PS1-PS3 are confirmations pre-filled
    from the spec line, not open questions.
 2. **Design tokens frozen.** All colour / font / radius / glow values
-   come from `:root` in `shared.css`. No hardcoded hex outside the
-   allow-list (see [`references/design-tokens.md`](references/design-tokens.md)).
+   come from `:root` in `shared.css`, referenced by role name
+   (`--accent-primary`, `--accent-warn`, …). No hardcoded hex and no
+   `rgb()/rgba()/hsl()` in slides — translucent colours are
+   `color-mix(in srgb, var(--token) N%, transparent)`, and inline SVG uses
+   `style="fill: var(--token)"` (see
+   [`references/design-tokens.md`](references/design-tokens.md)).
    Gate 2 fails the deck otherwise.
 3. **Content sourced, never invented.** Quote exact spans from the
    source named in the spec. Do not rewrite factual claims. If a fact
@@ -200,7 +204,7 @@ Read on demand when the workflow enters that phase — do not pre-load all.
   [`references/archetypes-talk.md`](references/archetypes-talk.md) —
   type add-ons.
 - [`references/design-tokens.md`](references/design-tokens.md) — frozen
-  palette, typography, allow-list rules.
+  palette, `color-mix` and SVG colour rules, typography, literal exceptions.
 - [`references/animations.md`](references/animations.md) — keyframe
   library + reduced-motion policy.
 - [`references/navigation-contract.md`](references/navigation-contract.md)

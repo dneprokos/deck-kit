@@ -24,14 +24,14 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    border: 1px solid rgba(0, 229, 255, 0.08);
+    border: 1px solid color-mix(in srgb, var(--accent-primary) 8%, transparent);
     border-radius: 50%;
     transform: translate(-50%, -50%);
   }
 
   .orbit.a { width: 620px;  height: 620px;  }
-  .orbit.b { width: 940px;  height: 940px;  border-color: rgba(213, 0, 249, 0.08); }
-  .orbit.c { width: 1260px; height: 1260px; border-color: rgba(41, 121, 255, 0.07); }
+  .orbit.b { width: 940px;  height: 940px;  border-color: color-mix(in srgb, var(--accent-ai) 8%, transparent); }
+  .orbit.c { width: 1260px; height: 1260px; border-color: color-mix(in srgb, var(--accent-human) 7%, transparent); }
 
   .satellite {
     position: absolute;
@@ -45,9 +45,9 @@
     box-shadow: 0 0 12px currentColor;
   }
 
-  .sat-a { color: var(--accent-cyan);   background: var(--accent-cyan);   animation: orbit-a 24s linear infinite; }
-  .sat-b { color: var(--accent-purple); background: var(--accent-purple); animation: orbit-b 38s linear infinite reverse; }
-  .sat-c { color: var(--accent-blue);   background: var(--accent-blue);   animation: orbit-c 52s linear infinite; }
+  .sat-a { color: var(--accent-primary);   background: var(--accent-primary);   animation: orbit-a 24s linear infinite; }
+  .sat-b { color: var(--accent-ai); background: var(--accent-ai); animation: orbit-b 38s linear infinite reverse; }
+  .sat-c { color: var(--accent-human);   background: var(--accent-human);   animation: orbit-c 52s linear infinite; }
 
   @keyframes orbit-a { to { transform: rotate(360deg) translateX(310px) rotate(-360deg); } }
   @keyframes orbit-b { to { transform: rotate(360deg) translateX(470px) rotate(-360deg); } }
@@ -67,13 +67,13 @@
     align-items: center;
     gap: 10px;
     padding: 8px 18px;
-    background: rgba(13, 20, 36, 0.65);
-    border: 1px solid rgba(0, 229, 255, 0.35);
+    background: color-mix(in srgb, var(--bg-panel) 65%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent-primary) 35%, transparent);
     border-radius: 100px;
     font-family: var(--font-mono);
     font-size: 0.8rem;
     letter-spacing: 3px;
-    color: var(--accent-cyan);
+    color: var(--accent-primary);
     text-transform: uppercase;
     backdrop-filter: blur(6px);
     margin-bottom: 40px;
@@ -84,8 +84,8 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--accent-green);
-    box-shadow: 0 0 8px var(--accent-green);
+    background: var(--accent-success);
+    box-shadow: 0 0 8px var(--accent-success);
     animation: breathe 2s ease-in-out infinite;
   }
 
@@ -95,9 +95,9 @@
     letter-spacing: -0.04em;
     line-height: 0.95;
     background: linear-gradient(120deg,
-      var(--accent-cyan)   0%,
-      var(--accent-blue)   40%,
-      var(--accent-purple) 100%);
+      var(--accent-primary)   0%,
+      var(--accent-human)   40%,
+      var(--accent-ai) 100%);
     background-size: 200% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -120,7 +120,7 @@
   }
 
   .cover-subtitle strong {
-    color: var(--accent-cyan);
+    color: var(--accent-primary);
     font-weight: 600;
   }
 
@@ -135,8 +135,8 @@
 
   .pill {
     padding: 10px 22px;
-    background: rgba(13, 20, 36, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: color-mix(in srgb, var(--bg-panel) 75%, transparent);
+    border: 1px solid color-mix(in srgb, var(--surface-tint) 10%, transparent);
     border-radius: 100px;
     font-family: var(--font-mono);
     font-size: 0.82rem;
@@ -146,14 +146,14 @@
   }
 
   .pill strong {
-    color: var(--accent-cyan);
+    color: var(--accent-primary);
     font-weight: 700;
     margin-right: 6px;
   }
 
-  .pill.amber strong { color: var(--accent-amber); }
-  .pill.green strong { color: var(--accent-green); }
-  .pill.purple strong { color: var(--accent-purple); }
+  .pill.amber strong { color: var(--accent-warn); }
+  .pill.green strong { color: var(--accent-success); }
+  .pill.purple strong { color: var(--accent-ai); }
 
   /* Meta line */
   .meta-line {
@@ -174,7 +174,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
+    background: color-mix(in srgb, var(--surface-tint) 15%, transparent);
   }
 
   .meta-line .speaker {

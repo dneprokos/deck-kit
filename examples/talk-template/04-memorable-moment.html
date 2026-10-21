@@ -24,9 +24,9 @@
     width: 800px;
     height: 500px;
     background: radial-gradient(
-      ellipse at center,
-      rgba(213, 0, 249, 0.1) 0%,
-      rgba(41, 121, 255, 0.06) 55%,
+      ellipse at center in srgb,
+      color-mix(in srgb, var(--accent-ai) 10%, transparent) 0%,
+      color-mix(in srgb, var(--accent-human) 6%, transparent) 55%,
       transparent 75%
     );
     pointer-events: none;
@@ -45,8 +45,8 @@
     font-family: Georgia, serif;
     font-size: 10rem;
     line-height: 0.8;
-    color: var(--accent-purple);
-    text-shadow: 0 0 40px rgba(213, 0, 249, 0.5);
+    color: var(--accent-ai);
+    text-shadow: 0 0 40px color-mix(in srgb, var(--accent-ai) 50%, transparent);
     margin-bottom: 20px;
     animation: fade-in 0.8s ease both;
   }
@@ -57,7 +57,7 @@
     letter-spacing: -0.02em;
     line-height: 1.15;
     background: linear-gradient(120deg,
-      var(--accent-purple) 0%, var(--accent-blue) 100%);
+      var(--accent-ai) 0%, var(--accent-human) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

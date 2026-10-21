@@ -108,8 +108,10 @@ A deck ships only when all four are green, in order:
 
 1. **Static** — closing tags, shared.css/js wiring, `SLIDES` array in
    sync with files on disk, no `defer` on the index script.
-2. **Tokens** — no hardcoded hex outside the documented allow-list, no
-   raw `font-family`, no `!important`. The design system stays frozen.
+2. **Tokens** — no hardcoded hex (terminal traffic-light dots excepted)
+   and no `rgb()/rgba()/hsl()` in slides, no raw `font-family`, no
+   `!important`. Every colour resolves to a `:root` token, so the palette
+   can be swapped in one place.
 3. **HTTP smoke** — boots a local server, curls index + assets + sampled
    slides, expects 200s. Catches typos and missing files.
 4. **Visual** — Playwright renders every slide at 1920×1080, screenshots

@@ -32,7 +32,7 @@
     font-size: 2.6rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-human), var(--accent-ai));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -49,7 +49,7 @@
   .concept-card {
     position: relative;
     background: var(--bg-panel);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid color-mix(in srgb, var(--surface-tint) 7%, transparent);
     border-radius: var(--radius-lg);
     padding: 32px 28px 28px;
     display: flex;
@@ -61,7 +61,7 @@
 
   .concept-card:hover {
     transform: translateY(-4px);
-    border-color: rgba(0, 229, 255, 0.3);
+    border-color: color-mix(in srgb, var(--accent-primary) 30%, transparent);
   }
 
   /* Top accent stripe */
@@ -75,9 +75,9 @@
     background: linear-gradient(90deg, var(--card-from), var(--card-to));
   }
 
-  .concept-card.card-1 { --card-from: var(--accent-red);  --card-to: var(--accent-amber); }
-  .concept-card.card-2 { --card-from: var(--accent-cyan); --card-to: var(--accent-blue);  border-color: rgba(0, 229, 255, 0.35); box-shadow: var(--glow-cyan); }
-  .concept-card.card-3 { --card-from: var(--accent-blue); --card-to: var(--accent-green); }
+  .concept-card.card-1 { --card-from: var(--accent-danger);  --card-to: var(--accent-warn); }
+  .concept-card.card-2 { --card-from: var(--accent-primary); --card-to: var(--accent-human);  border-color: color-mix(in srgb, var(--accent-primary) 35%, transparent); box-shadow: var(--glow-primary); }
+  .concept-card.card-3 { --card-from: var(--accent-human); --card-to: var(--accent-success); }
 
   .card-num {
     font-family: var(--font-mono);
@@ -95,7 +95,7 @@
     color: var(--text-primary);
   }
 
-  .concept-card.card-2 .card-name { color: var(--accent-cyan); }
+  .concept-card.card-2 .card-name { color: var(--accent-primary); }
 
   .card-desc {
     font-size: 1.05rem;

@@ -36,7 +36,7 @@
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.05;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-human), var(--accent-ai));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -64,7 +64,7 @@
     max-width: 560px;
     padding: 12px 18px;
     background: var(--bg-panel);
-    border: 1px solid rgba(0, 229, 255, 0.3);
+    border: 1px solid color-mix(in srgb, var(--accent-primary) 30%, transparent);
     border-radius: 10px;
     color: var(--text-primary);
     font-family: var(--font-mono);
@@ -75,16 +75,16 @@
   }
 
   .search:focus {
-    border-color: var(--accent-cyan);
-    box-shadow: var(--glow-cyan);
+    border-color: var(--accent-primary);
+    box-shadow: var(--glow-primary);
   }
 
   .toolbar .toggle {
     padding: 12px 20px;
     background: transparent;
-    border: 1px solid rgba(0, 229, 255, 0.3);
+    border: 1px solid color-mix(in srgb, var(--accent-primary) 30%, transparent);
     border-radius: 10px;
-    color: var(--accent-cyan);
+    color: var(--accent-primary);
     font-family: var(--font-mono);
     font-size: 0.85rem;
     letter-spacing: 1.5px;
@@ -93,7 +93,7 @@
   }
 
   .toolbar .toggle.active {
-    background: rgba(0, 229, 255, 0.15);
+    background: color-mix(in srgb, var(--accent-primary) 15%, transparent);
   }
 
   .toolbar .counter {
@@ -116,12 +116,12 @@
   .part-section h2 {
     font-size: 0.85rem;
     font-family: var(--font-mono);
-    color: var(--accent-amber);
+    color: var(--accent-warn);
     letter-spacing: 3px;
     text-transform: uppercase;
     margin-bottom: 14px;
     padding-bottom: 8px;
-    border-bottom: 1px dashed rgba(255, 171, 64, 0.25);
+    border-bottom: 1px dashed color-mix(in srgb, var(--accent-warn) 25%, transparent);
   }
 
   .grid-slides {
@@ -132,7 +132,7 @@
 
   .slide-tile {
     background: var(--bg-panel);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid color-mix(in srgb, var(--surface-tint) 7%, transparent);
     border-radius: 12px;
     padding: 16px 18px 18px;
     position: relative;
@@ -151,15 +151,15 @@
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-ai));
     opacity: 0;
     transition: opacity 0.2s ease;
   }
 
   .slide-tile:hover {
     transform: translateY(-3px);
-    border-color: rgba(0, 229, 255, 0.45);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 229, 255, 0.12);
+    border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent);
+    box-shadow: 0 10px 30px color-mix(in srgb, var(--shadow-color) 40%, transparent), 0 0 0 1px color-mix(in srgb, var(--accent-primary) 12%, transparent);
   }
 
   .slide-tile:hover::before { opacity: 1; }
@@ -196,14 +196,14 @@
     letter-spacing: 1px;
   }
 
-  .kind-cover   { background: rgba(0, 229, 255, 0.10);  color: var(--accent-cyan);   border: 1px solid rgba(0, 229, 255, 0.25); }
-  .kind-concept { background: rgba(41, 121, 255, 0.10); color: var(--accent-blue);   border: 1px solid rgba(41, 121, 255, 0.25); }
-  .kind-phase   { background: rgba(0, 229, 255, 0.08);  color: var(--accent-cyan);   border: 1px solid rgba(0, 229, 255, 0.18); }
-  .kind-demo    { background: rgba(0, 230, 118, 0.10);  color: var(--accent-green);  border: 1px solid rgba(0, 230, 118, 0.25); }
-  .kind-qa      { background: rgba(255, 171, 64, 0.10); color: var(--accent-amber);  border: 1px solid rgba(255, 171, 64, 0.25); }
-  .kind-scale   { background: rgba(213, 0, 249, 0.10);  color: var(--accent-purple); border: 1px solid rgba(213, 0, 249, 0.25); }
-  .kind-bonus   { background: rgba(255, 215, 64, 0.10); color: var(--accent-gold);   border: 1px solid rgba(255, 215, 64, 0.25); }
-  .kind-closing { background: rgba(255, 82, 82, 0.08);  color: var(--accent-red);    border: 1px solid rgba(255, 82, 82, 0.2); }
+  .kind-cover   { background: color-mix(in srgb, var(--accent-primary) 10%, transparent);  color: var(--accent-primary);   border: 1px solid color-mix(in srgb, var(--accent-primary) 25%, transparent); }
+  .kind-concept { background: color-mix(in srgb, var(--accent-human) 10%, transparent); color: var(--accent-human);   border: 1px solid color-mix(in srgb, var(--accent-human) 25%, transparent); }
+  .kind-phase   { background: color-mix(in srgb, var(--accent-primary) 8%, transparent);  color: var(--accent-primary);   border: 1px solid color-mix(in srgb, var(--accent-primary) 18%, transparent); }
+  .kind-demo    { background: color-mix(in srgb, var(--accent-success) 10%, transparent);  color: var(--accent-success);  border: 1px solid color-mix(in srgb, var(--accent-success) 25%, transparent); }
+  .kind-qa      { background: color-mix(in srgb, var(--accent-warn) 10%, transparent); color: var(--accent-warn);  border: 1px solid color-mix(in srgb, var(--accent-warn) 25%, transparent); }
+  .kind-scale   { background: color-mix(in srgb, var(--accent-ai) 10%, transparent);  color: var(--accent-ai); border: 1px solid color-mix(in srgb, var(--accent-ai) 25%, transparent); }
+  .kind-bonus   { background: color-mix(in srgb, var(--accent-highlight) 10%, transparent); color: var(--accent-highlight);   border: 1px solid color-mix(in srgb, var(--accent-highlight) 25%, transparent); }
+  .kind-closing { background: color-mix(in srgb, var(--accent-danger) 8%, transparent);  color: var(--accent-danger);    border: 1px solid color-mix(in srgb, var(--accent-danger) 20%, transparent); }
 
   .slide-tile.hidden { display: none; }
 
@@ -218,8 +218,8 @@
   .hint-keys {
     margin-top: 40px;
     padding: 16px 20px;
-    background: rgba(13, 20, 36, 0.6);
-    border: 1px dashed rgba(255, 255, 255, 0.1);
+    background: color-mix(in srgb, var(--bg-panel) 60%, transparent);
+    border: 1px dashed color-mix(in srgb, var(--surface-tint) 10%, transparent);
     border-radius: 10px;
     max-width: 1400px;
     margin-left: auto;
@@ -238,12 +238,12 @@
   .hint-keys kbd {
     display: inline-block;
     padding: 2px 8px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid color-mix(in srgb, var(--surface-tint) 20%, transparent);
     border-radius: 4px;
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    color: var(--accent-cyan);
-    background: rgba(0, 0, 0, 0.2);
+    color: var(--accent-primary);
+    background: color-mix(in srgb, var(--shadow-color) 20%, transparent);
     margin: 0 4px;
   }
 </style>

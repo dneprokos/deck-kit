@@ -48,7 +48,7 @@ body.hook { align-items: center; justify-content: center; }
 .hook-text { font-size: 4.5rem; font-weight: 900;
   letter-spacing: -0.03em; line-height: 1.05;
   background: linear-gradient(120deg,
-    var(--accent-cyan) 0%, var(--accent-purple) 100%);
+    var(--accent-primary) 0%, var(--accent-ai) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -100,16 +100,16 @@ the T=F·d of your argument. Monospace, bordered, centered.
 ```css
 .thesis-hero { max-width: 1200px; margin: 60px auto 0;
   text-align: center; }
-.thesis-eyebrow { font-family: var(--font-mono); color: var(--accent-cyan);
+.thesis-eyebrow { font-family: var(--font-mono); color: var(--accent-primary);
   font-size: 0.85rem; letter-spacing: 4px; margin-bottom: 28px; }
 .thesis-line { font-family: var(--font-mono); font-size: 2.4rem;
   font-weight: 700; line-height: 1.3; padding: 40px 60px;
-  border: 1px solid var(--accent-cyan); border-radius: var(--radius-lg);
-  background: rgba(0, 229, 255, 0.04); box-shadow: var(--glow-cyan); }
+  border: 1px solid var(--accent-primary); border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--accent-primary) 4%, transparent); box-shadow: var(--glow-primary); }
 .thesis-why { margin-top: 48px; max-width: 800px;
   margin-left: auto; margin-right: auto; }
 .thesis-why-label { font-family: var(--font-mono);
-  color: var(--accent-amber); font-size: 0.78rem;
+  color: var(--accent-warn); font-size: 0.78rem;
   letter-spacing: 3px; margin-bottom: 12px; }
 .thesis-why-text { font-size: 1.25rem; line-height: 1.5;
   color: var(--text-secondary); }
@@ -158,12 +158,12 @@ body.memorable { align-items: center; justify-content: center;
 .memorable-slide { text-align: center; max-width: 1100px;
   padding: 40px; position: relative; z-index: 1; }
 .memorable-mark { font-family: Georgia, serif; font-size: 10rem;
-  line-height: 0.8; color: var(--accent-purple);
-  text-shadow: 0 0 40px rgba(213, 0, 249, 0.5); margin-bottom: 20px; }
+  line-height: 0.8; color: var(--accent-ai);
+  text-shadow: 0 0 40px color-mix(in srgb, var(--accent-ai) 50%, transparent); margin-bottom: 20px; }
 .memorable-text { font-size: 3.2rem; font-weight: 700;
   letter-spacing: -0.02em; line-height: 1.15;
   background: linear-gradient(120deg,
-    var(--accent-purple) 0%, var(--accent-blue) 100%);
+    var(--accent-ai) 0%, var(--accent-human) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text; }
@@ -216,16 +216,16 @@ concrete next step.
 ```css
 body.cta { align-items: center; justify-content: center; }
 .cta-slide { text-align: center; max-width: 1100px; padding: 40px; }
-.cta-eyebrow { font-family: var(--font-mono); color: var(--accent-amber);
+.cta-eyebrow { font-family: var(--font-mono); color: var(--accent-warn);
   font-size: 0.85rem; letter-spacing: 4px; margin-bottom: 28px; }
 .cta-verb { font-size: 4rem; font-weight: 900; letter-spacing: -0.02em;
   line-height: 1.1; color: var(--text-primary); margin-bottom: 40px; }
 .cta-target { font-family: var(--font-mono); font-size: 1.55rem;
-  padding: 18px 32px; border: 1px solid var(--accent-amber);
+  padding: 18px 32px; border: 1px solid var(--accent-warn);
   border-radius: var(--radius-md); display: inline-block;
-  background: rgba(255, 171, 64, 0.04);
-  box-shadow: var(--glow-amber); }
-.cta-link { color: var(--accent-amber); text-decoration: none; }
+  background: color-mix(in srgb, var(--accent-warn) 4%, transparent);
+  box-shadow: var(--glow-warn); }
+.cta-link { color: var(--accent-warn); text-decoration: none; }
 .cta-qr { margin-top: 40px; width: 200px; height: 200px;
   border-radius: var(--radius-sm); }
 ```

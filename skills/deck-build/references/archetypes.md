@@ -189,11 +189,12 @@ hover state.
 - use `<marker id="ah">` defs for arrowheads
 - annotations in `<text>` elements using `font-family: var(--font-mono)`
 
-SVG needs palette-member hexes inline (CSS variable inheritance in SVG is
-inconsistent across browsers). Only `#00e5ff`, `#2979ff`, `#d500f9`, `#00e676`,
-`#ffab40`, `#ff5252`, `#e0e6f0` are allowed inline.
+SVG presentation attributes (`fill="…"`, `stroke="…"`) cannot take `var()`,
+so colour SVG through a `style` attribute or a class:
+`style="stroke: var(--accent-primary)"`, `style="fill: var(--text-muted)"`.
+Never write hex in the SVG — Gate 2 fails it.
 
-Build the SVG stages left-to-right with palette-member strokes.
+Build the SVG stages left-to-right with token-coloured strokes.
 
 ---
 

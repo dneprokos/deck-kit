@@ -19,7 +19,7 @@
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.1;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-human), var(--accent-ai));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -39,8 +39,8 @@
     padding: 28px 24px;
     border-radius: var(--radius-md);
     background: var(--bg-panel);
-    border: 1px solid rgba(0, 229, 255, 0.2);
-    box-shadow: var(--glow-cyan);
+    border: 1px solid color-mix(in srgb, var(--accent-primary) 20%, transparent);
+    box-shadow: var(--glow-primary);
     animation: fade-in-up 0.6s ease both;
   }
 
@@ -51,7 +51,7 @@
 
   .recap-num {
     font-family: var(--font-mono);
-    color: var(--accent-cyan);
+    color: var(--accent-primary);
     font-size: 0.85rem;
     letter-spacing: 3px;
     margin-bottom: 14px;
