@@ -72,8 +72,8 @@ else
 fi
 
 echo "== B · negative: each fixture fails exactly its own gate =="
-declare -a NAMES=(broken-static broken-tokens broken-tokens-rgba broken-theme broken-theme-override broken-visual)
-declare -a GATES=(1 2 2 2 2 4)
+declare -a NAMES=(broken-static broken-tokens broken-tokens-rgba broken-theme broken-theme-override broken-hue-class broken-visual)
+declare -a GATES=(1 2 2 2 2 2 4)
 for i in "${!NAMES[@]}"; do
   name="${NAMES[$i]}"; target="${GATES[$i]}"
   deck="$(make_fixture_deck "$name")"

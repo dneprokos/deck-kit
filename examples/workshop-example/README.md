@@ -13,7 +13,7 @@ The full workshop archetype sequence on the frozen design-token system:
 | 01 | `01-cover.html` | cover | Orbit-field title, kicker, pills, speaker meta |
 | 02 | `02-quote.html` | quote | Giant quote mark, highlighted phrase, attribution, bottom hook |
 | 03 | `03-concept.html` | concept | Three equally-weighted concept cards |
-| 04 | `04-phase-1.html` | phase (cyan) | `phase-shared.css` GOAL / INPUT→OUTPUT / COMMANDS / GATE |
+| 04 | `04-phase-1.html` | phase (primary) | `phase-shared.css` GOAL / INPUT→OUTPUT / COMMANDS / GATE |
 | 05 | `05-demo-1-tests.html` | terminal-demo | `demo-runner.js` scripted red→green characterization run |
 | 06 | `06-refactor-flow.html` | flow | Scroll-tolerant vertical chain smell → pin → extract → verify → commit |
 | 07 | `07-gate-review.html` | gate-review | Amber approval checklist + awaiting-confirmation badge |

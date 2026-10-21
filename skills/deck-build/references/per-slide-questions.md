@@ -66,7 +66,7 @@ Options depend on archetype:
 ### PS5 — Archetype-specific drill-down
 
 Examples:
-- **phase colour** — cyan / blue / green / amber / red / purple
+- **phase colour** — primary / human / success / warn / danger / ai (role names; the theme decides the actual colour)
 - **terminal-demo command** — free-text (e.g. `npm run deploy`)
 - **terminal-demo step count** — 5-10 / 10-20 / 20+
 - **comparison sides** — label for A / B

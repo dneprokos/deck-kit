@@ -29,7 +29,7 @@ slide of a given archetype, copy the declarations from the reference example.
 | `orbit-a`, `orbit-b`, `orbit-c` | cover | Orbiting satellites at 24/38/52s with varying radius + reverse |
 | `fall` | quote, qa-intro, closing | Vertical particle fall (14s linear) |
 | `drift` | qa-intro, closing | Lazy decorative float (18-22s ease-in-out) |
-| `pulse-red` | comparison | Red glow pulse on a highlighted risk row (2.4s) |
+| `pulse-danger` | comparison | Red glow pulse on a highlighted risk row (2.4s) |
 
 ## Stagger animation pattern
 

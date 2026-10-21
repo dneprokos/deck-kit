@@ -129,15 +129,15 @@ string goes into `innerHTML`.
 
 ## Terminal CSS classes (from `shared.css`)
 
-| Class | Colour | Use for |
+| Class | Token | Use for |
 |---|---|---|
-| `terminal-prompt` | green | Prompt prefix `$`, `claude>`, user shell |
-| `terminal-command` | cyan | Typed commands, code spans |
-| `terminal-muted` | muted | System messages, non-critical output |
-| `terminal-ok` | green | Success messages, completed checks |
-| `terminal-warn` | amber | GATE-awaiting, checkpoints, cautions |
-| `terminal-err` | red | Errors, failures |
-| `terminal-label` | amber | Section delimiters (`┌─ Phase 1 ───`) |
+| `terminal-prompt` | `--accent-success` | Prompt prefix `$`, `claude>`, user shell |
+| `terminal-command` | `--accent-primary` | Typed commands, code spans |
+| `terminal-muted` | `--text-muted` | System messages, non-critical output |
+| `terminal-ok` | `--accent-success` | Success messages, completed checks |
+| `terminal-warn` | `--accent-warn` | GATE-awaiting, checkpoints, cautions |
+| `terminal-err` | `--accent-danger` | Errors, failures |
+| `terminal-label` | `--accent-warn` | Section delimiters (`┌─ Phase 1 ───`) |
 
 Mix freely with `<span>` wrappers inside `multi.lines[].text` for partial
 colour on one line.

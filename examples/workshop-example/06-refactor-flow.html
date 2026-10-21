@@ -62,11 +62,11 @@
     animation: fade-in-up 0.5s ease both;
   }
 
-  .flow-node.node-red   { --node-accent: var(--accent-danger); }
-  .flow-node.node-cyan  { --node-accent: var(--accent-primary); }
-  .flow-node.node-blue  { --node-accent: var(--accent-human); }
-  .flow-node.node-amber { --node-accent: var(--accent-warn); box-shadow: var(--glow-warn); border-color: color-mix(in srgb, var(--accent-warn) 40%, transparent); }
-  .flow-node.node-green { --node-accent: var(--accent-success); box-shadow: var(--glow-success); border-color: color-mix(in srgb, var(--accent-success) 40%, transparent); }
+  .flow-node.node-danger   { --node-accent: var(--accent-danger); }
+  .flow-node.node-primary  { --node-accent: var(--accent-primary); }
+  .flow-node.node-human  { --node-accent: var(--accent-human); }
+  .flow-node.node-warn { --node-accent: var(--accent-warn); box-shadow: var(--glow-warn); border-color: color-mix(in srgb, var(--accent-warn) 40%, transparent); }
+  .flow-node.node-success { --node-accent: var(--accent-success); box-shadow: var(--glow-success); border-color: color-mix(in srgb, var(--accent-success) 40%, transparent); }
 
   .node-icon {
     font-size: 2rem;
@@ -74,7 +74,7 @@
     line-height: 1;
   }
 
-  .flow-node.node-amber .node-icon {
+  .flow-node.node-warn .node-icon {
     color: var(--accent-warn);
     font-family: Georgia, serif;
     animation: breathe 2.6s ease-in-out infinite;
@@ -170,7 +170,7 @@
 
   <div class="flow-chain">
 
-    <div class="flow-node node-red stagger-item">
+    <div class="flow-node node-danger stagger-item">
       <div class="node-icon">👃</div>
       <div class="node-body">
         <div class="node-step">Step 1</div>
@@ -181,7 +181,7 @@
 
     <div class="flow-conn"><span class="arrow">↓</span> pick the smallest safe move</div>
 
-    <div class="flow-node node-cyan stagger-item">
+    <div class="flow-node node-primary stagger-item">
       <div class="node-icon">🕸️</div>
       <div class="node-body">
         <div class="node-step">Step 2</div>
@@ -192,7 +192,7 @@
 
     <div class="flow-conn"><span class="arrow">↓</span> tests still green</div>
 
-    <div class="flow-node node-blue stagger-item">
+    <div class="flow-node node-human stagger-item">
       <div class="node-icon">✂️</div>
       <div class="node-body">
         <div class="node-step">Step 3</div>
@@ -203,7 +203,7 @@
 
     <div class="flow-conn"><span class="arrow">↓</span> run the suite</div>
 
-    <div class="flow-node node-amber stagger-item">
+    <div class="flow-node node-warn stagger-item">
       <div class="node-icon">◆</div>
       <div class="node-body">
         <div class="node-step">Step 4 · Gate</div>
@@ -214,7 +214,7 @@
 
     <div class="flow-conn"><span class="arrow">↓</span> green only</div>
 
-    <div class="flow-node node-green stagger-item">
+    <div class="flow-node node-success stagger-item">
       <div class="node-icon">💾</div>
       <div class="node-body">
         <div class="node-step">Step 5</div>

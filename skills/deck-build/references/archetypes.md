@@ -98,7 +98,7 @@ particles.
   <p class="cover-subtitle">{{subtitle_with_strong_tags}}</p>
   <div class="pill-row">
     <div class="pill"><strong>{{n}}</strong> {{label}}</div>
-    <!-- 3-4 pills, add .amber/.green/.purple modifier -->
+    <!-- 3-4 pills, add a role modifier: .warn / .success / .ai -->
   </div>
   <div class="meta-line">
     <span class="speaker">{{speaker}}</span>
@@ -223,13 +223,13 @@ layout.
 **Purpose:** one slide for one phase of a multi-phase process (discovery,
 impl, test, ship, etc.).
 
-**Body class:** `phase phase-{cyan|blue|green|amber|red|purple}` — the
+**Body class:** `phase phase-{primary|human|success|warn|danger|ai}` — the
 suffix picks the accent.
 
 **Layout** (all in `phase-shared.css`):
 
 ```html
-<body class="phase phase-cyan">
+<body class="phase phase-primary">
 <div class="phase-slide">
   <header class="phase-header">
     <div class="phase-num-block">
@@ -303,19 +303,19 @@ suffix picks the accent.
 ```
 
 **Colour variants** (body class sets `--phase-accent`):
-- `phase-cyan` — discovery / process phases
-- `phase-blue` — analysis / mapping phases
-- `phase-green` — planning / approval phases
-- `phase-amber` — execution / impl phases
-- `phase-red` — review / stabilisation phases
-- `phase-purple` — docs / archive / meta phases
+- `phase-primary` — discovery / process phases
+- `phase-human` — analysis / mapping phases
+- `phase-success` — planning / approval phases
+- `phase-warn` — execution / impl phases
+- `phase-danger` — review / stabilisation phases
+- `phase-ai` — docs / archive / meta phases
 
 Sequence tip: walk the spectrum across phases, not re-use one colour twice
-in a row. The example deck uses cyan → cyan → cyan → green → amber → blue →
-red → green → purple.
+in a row. A 9-phase deck might use primary → primary → primary → success → warn →
+human → danger → success → ai.
 
-**Pattern card variants:** `.pattern-card.warn` (red), `.pattern-card.green`,
-`.pattern-card.purple` — pick by pattern tone.
+**Pattern card variants:** `.pattern-card.danger`, `.pattern-card.success`,
+`.pattern-card.ai` — pick by pattern tone.
 
 ---
 
@@ -341,7 +341,7 @@ terminal. See `references/terminal-demo-dsl.md` for DSL details.
       <div class="tagline">{{one_line_summary}}</div>
     </div>
     <div class="demo-meta-block">
-      <span class="badge badge-green">~{{minutes}} min</span>
+      <span class="badge badge-success">~{{minutes}} min</span>
     </div>
   </header>
 
@@ -405,7 +405,7 @@ Uses `.data-table` from `shared.css`. Common pattern:
     </tr>
   </thead>
   <tbody>
-    <tr><td>...</td><td><span class="badge badge-cyan">Phase 1</span></td>...</tr>
+    <tr><td>...</td><td><span class="badge badge-primary">Phase 1</span></td>...</tr>
   </tbody>
 </table>
 ```
