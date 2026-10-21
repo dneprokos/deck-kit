@@ -187,9 +187,10 @@ install instructions — surface them to the user, do not silently skip.
    - validation result per gate + timestamp (and any explicitly
      user-approved `--skip-visual`)
 2. Tell the user how to present:
-   `cd <output-dir> && python3 -m http.server 8765` → open
-   `http://localhost:8765` (grid) — arrows/Space to navigate, Esc back
-   to index, PRESENTER MODE toggle in the grid header.
+   `node "${CLAUDE_PLUGIN_ROOT}/scripts/serve.mjs" <output-dir> 8080` → open
+   `http://127.0.0.1:8080` (grid) — arrows/Space to navigate, Esc back
+   to index, PRESENTER MODE toggle in the grid header. (Omit the port to
+   let the OS pick one; the URL is printed on start.)
 3. Point at `.audit/screenshots/` for visual review.
 
 ## Red flags — stop and reconsider

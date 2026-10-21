@@ -69,10 +69,11 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/audit-http.sh" <deck-dir>
 ```
 
 **What it does:**
-1. Picks a free port (default 8765 or next available).
-2. `cd <deck-dir> && python3 -m http.server <port>` in background.
-3. `sleep 1` — let the server come up.
-4. `curl -sI` the following URLs, expect HTTP 200 on every one:
+1. Starts `scripts/serve.mjs` on the deck in the background, port 0 —
+   the OS assigns a free port, so no fixed range can collide with ports
+   the OS reserves (Windows reserves 8751-8850 under Hyper-V/WSL).
+2. Waits (up to 10s) for its `listening http://127.0.0.1:<port>` line.
+3. `curl` the following URLs, expect HTTP 200 on every one:
    - `/index.html`
    - `/shared.css`
    - `/theme.css`
@@ -80,7 +81,7 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/audit-http.sh" <deck-dir>
    - `/demo-runner.js` (if the deck uses it — check by grepping for
      `demo-runner.js` in any slide)
    - 5 random slide files from the `NN-*.html` glob
-5. Kill the server before exit (`trap EXIT`).
+4. Kill the server before exit (`trap EXIT`).
 
 **Why this exists:** catches filename typos, wrong paths, missing files.
 A file that 404s here also broke the deck silently in the browser.

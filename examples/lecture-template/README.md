@@ -24,9 +24,9 @@
 ## Running Locally
 
 ```bash
-cd examples/lecture-template
-python3 -m http.server 8765
-# open http://localhost:8765
+# from the repo root
+node scripts/serve.mjs examples/lecture-template 8080
+# open http://127.0.0.1:8080
 ```
 
 Add `?presenter` to any URL for presenter mode (1.25× scale, progress bar, keyboard nav).

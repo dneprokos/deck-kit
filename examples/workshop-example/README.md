@@ -30,9 +30,9 @@ from Martin Fowler's *Refactoring* (1999).
 ## How to present it
 
 ```bash
-cd examples/workshop-example
-python3 -m http.server 8765
-# open http://localhost:8765
+# from the repo root
+node scripts/serve.mjs examples/workshop-example 8080
+# open http://127.0.0.1:8080
 ```
 
 - The grid at `/` lists all slides in three sections. Click a tile to open it.

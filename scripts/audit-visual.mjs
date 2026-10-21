@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* audit-visual.mjs <deck-dir>
  * Gate 4: visual rendering with Playwright.
- * - Boots http.server, headless Chromium at 1920x1080.
+ * - Serves the deck in-process (serve.mjs), headless Chromium at 1920x1080.
  * - Screenshots each slide into .audit/screenshots/.
  * - Asserts no horizontal overflow + no JS errors on load.
  *
@@ -9,13 +9,12 @@
  * Exits 0 on pass, 1 on failure, 2 on environment / install issues.
  */
 
-import { spawn } from "node:child_process";
 import { readdir, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import process from "node:process";
-import net from "node:net";
+import { startServer } from "./serve.mjs";
 
 /* Resolve playwright in three steps:
  * 1. bare import — works when this script's own tree has node_modules
@@ -72,42 +71,19 @@ if (!existsSync(deckDir)) {
   process.exit(2);
 }
 
-// ----- Pick a free port ---------------------------------------------------
+// ----- Boot the in-process static server ----------------------------------
+// OS-assigned port on 127.0.0.1: no fixed range to collide with reserved
+// ports, no python3 dependency, and the server is listening before the
+// first request (no boot sleep).
 
-function pickPort(start = 8765, end = 8800) {
-  return new Promise((resolve, reject) => {
-    const tryPort = (p) => {
-      if (p > end) return reject(new Error("no free port"));
-      const srv = net.createServer();
-      srv.once("error", () => tryPort(p + 1));
-      srv.once("listening", () => {
-        srv.close(() => resolve(p));
-      });
-      srv.listen(p, "127.0.0.1");
-    };
-    tryPort(start);
-  });
-}
-
-const port = await pickPort();
-const base = `http://localhost:${port}`;
-
-// ----- Boot python3 http.server -------------------------------------------
-
-const server = spawn("python3", ["-m", "http.server", String(port)], {
-  cwd: deckDir,
-  stdio: ["ignore", "ignore", "ignore"],
-});
+const { server, port } = await startServer(deckDir);
+const base = `http://127.0.0.1:${port}`;
 
 const killServer = () => {
-  try { server.kill("SIGTERM"); } catch { /* noop */ }
+  try { server.close(); } catch { /* noop */ }
 };
-process.on("exit", killServer);
 process.on("SIGINT", () => { killServer(); process.exit(130); });
 process.on("SIGTERM", () => { killServer(); process.exit(143); });
-
-// Wait briefly for server boot.
-await new Promise((r) => setTimeout(r, 1000));
 
 // ----- Collect slides to test ---------------------------------------------
 

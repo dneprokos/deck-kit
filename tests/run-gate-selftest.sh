@@ -25,14 +25,14 @@ bad()  { echo "  ✗ $1"; FAIL=$((FAIL + 1)); }
 # Register slide files in a scaffolded shared.js SLIDES array.
 register_slides() { # <deck-dir> <file1> [file2 …]
   local deck="$1"; shift
-  python3 - "$deck/shared.js" "$@" <<'PY'
-import re, sys
-path, files = sys.argv[1], sys.argv[2:]
-text = open(path).read()
-entries = "\n".join(f'    {{ file: "{f}", title: "{f}" }},' for f in files)
-text = re.sub(r"var SLIDES = \[.*?\];", f"var SLIDES = [\n{entries}\n  ];", text, count=1, flags=re.S)
-open(path, "w").write(text)
-PY
+  node -e '
+const fs = require("fs");
+const [path, ...files] = process.argv.slice(1);
+const entries = files.map((f) => `    { file: "${f}", title: "${f}" },`).join("\n");
+const text = fs.readFileSync(path, "utf8")
+  .replace(/var SLIDES = \[[\s\S]*?\];/, () => `var SLIDES = [\n${entries}\n  ];`);
+fs.writeFileSync(path, text);
+' "$deck/shared.js" "$@"
 }
 
 # Build a broken deck: scaffold + overlay one fixture slide + register it.
@@ -90,7 +90,7 @@ done
 echo "== C · playwright resolution from a plugin-cache-like location =="
 CACHE_SIM="$TMP/cache-sim"
 mkdir -p "$CACHE_SIM" "$TMP/bare-cwd"
-cp "$ROOT/scripts/audit-visual.mjs" "$CACHE_SIM/"
+cp "$ROOT/scripts/audit-visual.mjs" "$ROOT/scripts/serve.mjs" "$CACHE_SIM/"
 CLEAN_DECK="$TMP/clean-deck"
 bash "$ROOT/scripts/new-skeleton.sh" --type=talk "$CLEAN_DECK" >/dev/null
 

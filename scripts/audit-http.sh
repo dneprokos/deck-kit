@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # audit-http.sh <deck-dir>
-# Gate 3: HTTP smoke. Boots python3 http.server, curls index + 5 random
-# slides + shared files, expects HTTP 200 everywhere. Kills the server on
-# exit.
+# Gate 3: HTTP smoke. Boots serve.mjs (Node static server, OS-assigned
+# port on 127.0.0.1), curls index + 5 random slides + shared files, expects
+# HTTP 200 everywhere. Kills the server on exit.
 
 set -euo pipefail
 
@@ -12,30 +12,34 @@ if [[ -z "$DECK" || ! -d "$DECK" ]]; then
   exit 2
 fi
 
+# Resolve before cd — BASH_SOURCE may be a relative path.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 cd "$DECK"
 
-# Pick a free port starting at 8765.
-PORT=8765
-while lsof -i ":$PORT" >/dev/null 2>&1; do
-  PORT=$((PORT + 1))
-  if [[ "$PORT" -gt 8800 ]]; then
-    echo "no free port in 8765-8800 range" >&2
-    exit 1
-  fi
-done
-
-echo "Booting http.server on port ${PORT}..."
-python3 -m http.server "${PORT}" >/dev/null 2>&1 &
+# serve.mjs prints "listening http://127.0.0.1:<port>" once it is bound.
+SERVER_LOG="$(mktemp)"
+node "$SCRIPT_DIR/serve.mjs" . 0 > "$SERVER_LOG" 2>&1 &
 SERVER_PID=$!
 # Ensure cleanup on any exit path.
-trap 'kill "${SERVER_PID}" 2>/dev/null || true; wait "${SERVER_PID}" 2>/dev/null || true' EXIT
+trap 'kill "${SERVER_PID}" 2>/dev/null || true; wait "${SERVER_PID}" 2>/dev/null || true; rm -f "${SERVER_LOG}"' EXIT
 
-# Give the server a moment to come up.
-sleep 1
+BASE=""
+for _ in $(seq 1 100); do
+  BASE=$(grep -oE 'http://127\.0\.0\.1:[0-9]+' "$SERVER_LOG" 2>/dev/null || true)
+  [[ -n "$BASE" ]] && break
+  sleep 0.1
+done
+if [[ -z "$BASE" ]]; then
+  echo "[FAIL] deck server did not start within 10s"
+  cat "$SERVER_LOG"
+  exit 1
+fi
+echo "Serving deck at ${BASE}"
 
 # Basic sanity: server is responding.
-if ! curl -sfI "http://localhost:${PORT}/" >/dev/null 2>&1; then
-  echo "[FAIL] http.server not reachable on :${PORT}"
+if ! curl -sf -o /dev/null "${BASE}/"; then
+  echo "[FAIL] deck server not reachable at ${BASE}"
   exit 1
 fi
 
@@ -43,7 +47,7 @@ fail_count=0
 check_url() {
   local path="$1"
   local code
-  code=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:${PORT}${path}" || true)
+  code=$(curl -s -o /dev/null -w "%{http_code}" "${BASE}${path}" || true)
   if [[ "${code}" != "200" ]]; then
     echo "[FAIL] ${path} -> HTTP ${code}"
     fail_count=$((fail_count + 1))

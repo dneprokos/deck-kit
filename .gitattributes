@@ -1,0 +1,4 @@
+# Shell scripts must keep LF on every checkout — Windows runners and
+# clones default to core.autocrlf=true, and bash fails on CRLF scripts
+# ($'\r': command not found).
+*.sh text eol=lf
